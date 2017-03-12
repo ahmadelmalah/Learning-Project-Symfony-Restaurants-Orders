@@ -11,6 +11,10 @@ security:
         fos_userbundle:
             id: fos_user.user_provider.username
 
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
     firewalls:
         main:
             pattern: ^/
