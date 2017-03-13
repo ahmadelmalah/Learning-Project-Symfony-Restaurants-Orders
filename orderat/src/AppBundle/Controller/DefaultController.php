@@ -35,6 +35,6 @@ class DefaultController extends Controller
         $user = $this->getDoctrine()
         ->getRepository('AppBundle:Restaurant')
         ->find(2);
-        return new Response( $user->getPhones()[0]->getPhone() );
+        return new Response( $this->getUser()->getUsername() );
     }
 }

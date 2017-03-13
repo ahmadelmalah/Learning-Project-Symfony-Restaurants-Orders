@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use AppBundle\Entity\Restaurant;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use AppBundle\Entity\Forder;
 
 use AppBundle\Form\RestaurantType;
+use AppBundle\Form\ForderType;
 
 class OrderController extends Controller
 {
@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function indexAction(Request $request)
     {
         if ($this->isGranted('ROLE_USER') == true) {
-          return $this->render('default/index.html.twig', [
+          return $this->render('default/content/active.html.twig', [
               'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
           ]);
         }
@@ -33,17 +33,24 @@ class OrderController extends Controller
     public function newAction(Request $request)
     {
         if ($this->isGranted('ROLE_USER') == true) {
-          //code here
-           $restaurant = new Restaurant();
-           $restaurant->setName('KFC');
+           $forder = new Forder();
+           $form = $this->createForm(ForderType::class, $forder);
+           $form->handleRequest($request);
+          if ($form->isSubmitted() && $form->isValid()) {
 
-          $form = $this->createFormBuilder($restaurant)
-                  ->add('name', TextType::class)
-                  ->add('save', SubmitType::class, array('label' => 'Create Restaurant'))
-                  ->getForm();
+                  //Initial Values for order --> order serice
+                  $state = $this->getDoctrine()->getRepository('AppBundle:state')->find(1);
+
+                  $forder->setState($state);
+                  $forder->setUser($user);
+                  $forder->setCreatedAt(new \DateTime("now"));
+
+                  $this->get('app.helper')->Save($forder);
+                  return $this->redirectToRoute('new');
+          }
 
           //page
-          return $this->render('default/index.html.twig', [
+          return $this->render('default/content/new.html.twig', [
               'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
               'form' => $form->createView(),
           ]);
