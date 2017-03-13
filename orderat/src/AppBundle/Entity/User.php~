@@ -77,4 +77,38 @@ class User extends BaseUser
     {
         return $this->items;
     }
+
+    /**
+     * Add forder
+     *
+     * @param \AppBundle\Entity\Forder $forder
+     *
+     * @return User
+     */
+    public function addForder(\AppBundle\Entity\Forder $forder)
+    {
+        $this->forders[] = $forder;
+
+        return $this;
+    }
+
+    /**
+     * Remove forder
+     *
+     * @param \AppBundle\Entity\Forder $forder
+     */
+    public function removeForder(\AppBundle\Entity\Forder $forder)
+    {
+        $this->forders->removeElement($forder);
+    }
+
+    /**
+     * Get forders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getForders()
+    {
+        return $this->forders;
+    }
 }

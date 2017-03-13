@@ -31,7 +31,7 @@ class Restaurant
     /**
      * @var string
      *
-     * @ORM\Column(name="menuurl", type="string", length=255)
+     * @ORM\Column(name="menuurl", type="string", length=255, nullable=true)
      */
     private $menuurl;
 
@@ -47,7 +47,7 @@ class Restaurant
 
     public function __construct()
     {
-        $this->phones = new ArrayCollection();
+        //$this->phones = new ArrayCollection();
     }
 
 
