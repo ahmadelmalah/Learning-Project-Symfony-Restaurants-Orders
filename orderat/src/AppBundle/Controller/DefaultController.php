@@ -33,8 +33,8 @@ class DefaultController extends Controller
           return new Response( 'Who Are You?' );
       }
         $user = $this->getDoctrine()
-        ->getRepository('AppBundle:User')
+        ->getRepository('AppBundle:Forder')
         ->find(1);
-        return new Response($user->getUsername());
+        return new Response( $user->getRestaurant()->getName() );
     }
 }
