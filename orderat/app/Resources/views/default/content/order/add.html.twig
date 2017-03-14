@@ -1,0 +1,30 @@
+{% extends 'default/index.html.twig' %}
+
+{% block content_title %}Add Items{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+
+  <h1>Eat what you love</h1>
+  <p>but take care of your health </p>
+  {{ form_start(form) }}
+  <div>
+       {{ form_label(form.name)  }}
+       {{ form_errors(form.name) }}
+       {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+   </div>
+   <br />
+   <div>
+        {{ form_label(form.quantity)  }}
+        {{ form_errors(form.quantity) }}
+        {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <br />
+   <div>
+        {{ form_label(form.save)  }}
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+    </div>
+  {{ form_end(form) }}
+
+</div>
+{% endblock %}

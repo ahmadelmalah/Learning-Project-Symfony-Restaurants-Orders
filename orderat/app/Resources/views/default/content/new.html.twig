@@ -1,1 +1,25 @@
 {% extends 'default/index.html.twig' %}
+
+{% block content_title %}New Order{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  
+  <h1>Hungry ?</h1>
+  <p>Great! Let's start a new order <br />
+     Screw the diet :D </p>
+  {{ form_start(form) }}
+  <div>
+       {{ form_label(form.restaurant)  }}
+       {{ form_errors(form.restaurant) }}
+       {{ form_widget(form.restaurant, {'attr': {'class': 'form-control'}}) }}
+   </div>
+   <br />
+   <div>
+        {{ form_label(form.save)  }}
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+    </div>
+  {{ form_end(form) }}
+
+</div>
+{% endblock %}

@@ -7,3 +7,9 @@ services:
      app.helper:
        class: AppBundle\Utils\Helper
        arguments: ['@doctrine.orm.entity_manager']
+     app.OrderService:
+       class: AppBundle\Services\OrderService
+       arguments: ['@doctrine.orm.entity_manager', "@=service('security.token_storage').getToken().getUser()"]
+     app.ItemService:
+       class: AppBundle\Services\ItemService
+       arguments: ['@doctrine.orm.entity_manager', "@=service('security.token_storage').getToken().getUser()"]
