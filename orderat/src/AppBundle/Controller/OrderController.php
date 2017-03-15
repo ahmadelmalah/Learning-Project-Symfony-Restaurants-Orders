@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,12 +23,20 @@ class OrderController extends Controller
      */
     public function indexAction(Request $request)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return new Response('NOT AUTHORIZED');
-        }
-
-        $forders = $this->get('app.OrderService')->getOrders();
+        $forders = $this->get('app.OrderService')->getOrders('active');
         return $this->render('default/content/active.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'forders' => $forders
+        ]);
+    }
+
+    /**
+     * @Route("/archive", name="archive")
+     */
+    public function archiveAction(Request $request)
+    {
+        $forders = $this->get('app.OrderService')->getOrders('archive');
+        return $this->render('default/content/archive.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forders' => $forders
         ]);
@@ -38,10 +47,6 @@ class OrderController extends Controller
      */
     public function newAction(Request $request)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return new Response('NOT AUTHORIZED');
-        }
-
        $forder = new Forder();
        $form = $this->createForm(ForderType::class, $forder);
        $form->handleRequest($request);
@@ -58,18 +63,15 @@ class OrderController extends Controller
 
     /**
      * @Route("/orders/{id}/add", name="addItems")
+     * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function addAction(Request $request, $id)
+    public function addAction(Request $request, $forder)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return new Response('NOT AUTHORIZED');
-        }
-
        $item = new Item();
        $form = $this->createForm(ItemType::class, $item);
        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('app.ItemService')->create($item, $id);
+            $this->get('app.ItemService')->create($item, $forder);
             return $this->redirectToRoute('active');
         }
 
@@ -81,15 +83,10 @@ class OrderController extends Controller
 
     /**
      * @Route("/orders/{id}/show", name="showOrder")
+     * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function showAction(Request $request, $id)
+    public function showAction(Request $request, $forder)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return new Response('NOT AUTHORIZED');
-        }
-        $forder = $this->getDoctrine()
-        ->getRepository('AppBundle:Forder')
-        ->find($id);
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
@@ -98,16 +95,11 @@ class OrderController extends Controller
 
     /**
      * @Route("/orders/{id}/ready", name="readyOrder")
+     * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function readyAction(Request $request, $id)
+    public function readyAction(Request $request, $forder)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return new Response('NOT AUTHORIZED');
-        }
-        $this->get('app.OrderService')->ready($id);
-        $forder = $this->getDoctrine()
-        ->getRepository('AppBundle:Forder')
-        ->find($id);
+        $this->get('app.OrderService')->ready($forder);
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
@@ -116,16 +108,11 @@ class OrderController extends Controller
 
     /**
      * @Route("/orders/{id}/call", name="callOrder")
+     * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function callAction(Request $request, $id)
+    public function callAction(Request $request, $forder)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return new Response('NOT AUTHORIZED');
-        }
-        $this->get('app.OrderService')->call($id);
-        $forder = $this->getDoctrine()
-        ->getRepository('AppBundle:Forder')
-        ->find($id);
+        $this->get('app.OrderService')->call($forder);
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
@@ -134,16 +121,12 @@ class OrderController extends Controller
 
     /**
      * @Route("/orders/{id}/deliver", name="deliverOrder")
+     * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function deliverAction(Request $request, $id)
+    public function deliverAction(Request $request, $forder)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return new Response('NOT AUTHORIZED');
-        }
-        $this->get('app.OrderService')->deliver($id);
-        $forder = $this->getDoctrine()
-        ->getRepository('AppBundle:Forder')
-        ->find($id);
+        $price = $request->get('price');
+        $this->get('app.OrderService')->deliver($forder, $price);
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
@@ -152,16 +135,11 @@ class OrderController extends Controller
 
     /**
      * @Route("/orders/{id}/complete", name="completeOrder")
+     * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function completeAction(Request $request, $id)
+    public function completeAction(Request $request, $forder)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return new Response('NOT AUTHORIZED');
-        }
-        $this->get('app.OrderService')->complete($id);
-        $forder = $this->getDoctrine()
-        ->getRepository('AppBundle:Forder')
-        ->find($id);
+        $this->get('app.OrderService')->complete($forder);
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
@@ -174,8 +152,6 @@ class OrderController extends Controller
      */
     public function newRestaurantAction(Request $request)
     {
-        if ($this->isGranted('ROLE_USER') == true) {
-          //code here
           $restaurant = new Restaurant();
           $form = $this->createForm(RestaurantType::class, $restaurant);
           $form->handleRequest($request);
@@ -194,6 +170,5 @@ class OrderController extends Controller
               'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
               'form' => $form->createView(),
           ]);
-        }
     }
 }

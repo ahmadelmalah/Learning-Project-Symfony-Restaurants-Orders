@@ -1,0 +1,37 @@
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title"><b>{{ forder.restaurant.name }}</b> (created by: {{ forder.user }})</h3>
+  </div>
+  <div class="panel-body">
+    {% include 'default/content/order/component/progress.html.twig' %}
+      Status : {{ forder.state.name }} <br />
+     Started at : {{ forder.createdat |date('Y-m-d\\TH:i:sP') }} <br />
+
+     {% if forder.state.id >=3 %}
+     Called at : {{ forder.calledat |date('Y-m-d\\TH:i:sP') }} <br />
+     {% endif %}
+     {% if forder.state.id >=4 %}
+     Delivered at : {{ forder.deliveredat |date('Y-m-d\\TH:i:sP') }} <br />
+     {% endif %}
+     {% if forder.state.id ==5 %}
+     Completed at : {{ forder.completedat |date('Y-m-d\\TH:i:sP') }} <br />
+     {% endif %}
+
+     Items : {{ forder.items.count }} <br />
+     {% if forder.state.id >=4 %}
+     Price : {{ forder.price }} <br />
+     {% endif %}
+
+
+    <ul class="list-group">
+      {% for item in forder.items %}
+        <li class="list-group-item">
+          <span class="badge">{{ item.quantity }}</span>
+            {{ item.name }}
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% include 'default/content/order/component/buttonbar.html.twig' %}
+  </div>
+</div>

@@ -25,16 +25,13 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/test", name="test")
+     * @Route("/admin/test", name="test")
      */
     public function testAction(Request $request)
     {
-      if ($this->isGranted('ROLE_USER') == false) {
-          return new Response( 'Who Are You?' );
-      }
         $user = $this->getDoctrine()
         ->getRepository('AppBundle:Restaurant')
         ->find(2);
-        return new Response( $this->getUser()->getUsername() );
+        return new Response( 'test' );
     }
 }

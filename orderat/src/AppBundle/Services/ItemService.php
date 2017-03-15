@@ -19,24 +19,18 @@ class ItemService
          $this->user = $iUser;
      }
 
-    public function create($item, $forderID)
+    /*
+    * Inserts items inside an order
+    */
+    public function create($item, $forder)
     {
       $em = $this->em;
       $user = $this->user;
-
-      //Initial Values
-      $forder = $em->getRepository('AppBundle:Forder')->find($forderID); //active
 
       $item->setForder($forder);
       $item->setUser($user);
 
       $em->persist($item);
       $em->flush();
-    }
-
-    public function getItems(){
-        // $em = $this->em;
-        // $forders = $em->getRepository('AppBundle:Forder')->findAll();
-        // return $forders;
     }
 }

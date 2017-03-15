@@ -1,3 +1,13 @@
 {% extends 'default/index.html.twig' %}
 
-{% block content_title %}Archive{% endblock %}
+{% block content_title %}Archived Orders{% endblock %}
+
+{% block content %}
+
+{% for forder in forders %}
+
+{% include 'default/content/order/component/order.html.twig' %}
+
+{% endfor %}
+
+{% endblock %}

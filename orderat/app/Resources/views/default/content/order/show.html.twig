@@ -3,74 +3,7 @@
 {% block content_title %}Show Order{% endblock %}
 
 {% block content %}
-<div class="panel panel-success">
-  <div class="panel-heading">
-    <h3 class="panel-title"><b>{{ forder.restaurant.name }}</b> (created by: {{ forder.user }})</h3>
-  </div>
-  <div class="panel-body">
-    Status : {{ forder.state.name }}
-    <div class="progress">
 
-      <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 20%">
-        <span>Active</span>
-      </div>
+{% include 'default/content/order/component/order.html.twig' %}
 
-      {% if forder.state.id >=2 %}
-       <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 20%">
-        <span>Ready</span>
-      </div>
-      {% endif %}
-
-      {% if forder.state.id >=3 %}
-       <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
-        <span>Waiting</span>
-      </div>
-      {% endif %}
-
-      {% if forder.state.id >=4 %}
-       <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 20%">
-        <span>Delivered</span>
-      </div>
-      {% endif %}
-
-      {% if forder.state.id ==5 %}
-       <div class="progress-bar progress-bar-primary progress-bar-striped" style="width: 20%">
-        <span>Complete</span>
-      </div>
-      {% endif %}
-
-    </div>
-    Items : {{ forder.items.count }}
-
-
-    <ul class="list-group">
-      {% for item in forder.items %}
-        <li class="list-group-item">
-          <span class="badge">{{ item.quantity }}</span>
-            {{ item.name }}
-        </li>
-      {% endfor %}
-    </ul>
-
-    {% if forder.state.id ==1 %}
-    <a href="orders/{{ forder.id }}/add" class="btn btn-primary btn-sm">Wait, Add my item!</a>
-    {% endif %}
-
-    <!-- bp: button group -->
-    <!-- bp: first if at the top: check he's the creator -->
-    <!-- bp: if 2:text=call label=let's -->
-    {% if app.user.id == forder.user.id and forder.state.id ==1 %}
-      <a href="../../orders/{{ forder.id }}/ready" class="btn btn-primary btn-sm">Enough! we are now ready.</a>
-    {% endif %}
-    {% if app.user.id == forder.user.id and forder.state.id ==2 %}
-      <a href="../../orders/{{ forder.id }}/call" class="btn btn-primary btn-sm">We have called!</a>
-    {% endif %}
-    {% if app.user.id == forder.user.id and forder.state.id ==3 %}
-      <a href="../../orders/{{ forder.id }}/deliver" class="btn btn-primary btn-sm">hmmm! The order is delivered.</a>
-    {% endif %}
-    {% if app.user.id == forder.user.id and forder.state.id ==4 %}
-      <a href="../../orders/{{ forder.id }}/complete" class="btn btn-primary btn-sm">We have completed!</a>
-    {% endif %}
-  </div>
-</div>
 {% endblock %}

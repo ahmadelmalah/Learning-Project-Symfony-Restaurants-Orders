@@ -11,10 +11,6 @@ security:
         fos_userbundle:
             id: fos_user.user_provider.username
 
-    access_control:
-        # require ROLE_ADMIN for /admin*
-        - { path: ^/admin, roles: ROLE_ADMIN }
-
     firewalls:
         main:
             pattern: ^/
@@ -31,4 +27,11 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+
+        - { path: new, roles: ROLE_USER }
+        - { path: active, roles: ROLE_USER }
+        - { path: archive, roles: ROLE_USER }
+        - { path: ^/orders, roles: ROLE_USER }
+        - { path: ^/restaurants, roles: ROLE_USER }
+
+        - { path: ^/admin, roles: ROLE_ADMIN }
