@@ -2,13 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use FOS\RestBundle\Controller\FOSRestController;
+
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class DefaultController extends Controller
+class DefaultController extends FOSRestController
 {
     /**
      * @Route("/", name="homepage")
@@ -25,13 +28,16 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin/test", name="test")
+     * @Route("/test55", name="test55")
      */
     public function testAction(Request $request)
     {
         $user = $this->getDoctrine()
         ->getRepository('AppBundle:Restaurant')
         ->find(2);
-        return new Response( 'test' );
+          //  $view = $this->view($user);
+          // $view->setFormat('json');
+          // return $this->handleView($view);
+        return new Response( $user->getName() . 'o' );
     }
 }

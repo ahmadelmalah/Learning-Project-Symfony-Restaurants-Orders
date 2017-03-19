@@ -18,7 +18,7 @@ framework:
     form: ~
     csrf_protection: ~
     validation: { enable_annotations: true }
-    #serializer: { enable_annotations: true }
+    serializer: { enable_annotations: true }
     templating:
         engines: ['twig']
     default_locale: '%locale%'
@@ -68,6 +68,17 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+        enabled: false
+        rules:
+            - { path: '^/api/', priorities: ['json', 'xml'], fallback_format: 'html' }
+    versioning: true
+    view:
+        view_response_listener: 'force'
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
