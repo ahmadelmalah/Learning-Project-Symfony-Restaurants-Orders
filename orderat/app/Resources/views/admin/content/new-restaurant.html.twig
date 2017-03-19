@@ -1,0 +1,47 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block content %}
+
+<section class="content-header">
+  <h1>
+    Dashboard
+    <small>Home</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li class="active">Home</li>
+  </ol>
+</section>
+
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="jumbotron">
+
+      <h1>New Restaurant ?</h1>
+      <p>Help people know more restaurants! </p>
+      {{ form_start(form) }}
+      <div>
+           {{ form_label(form.name)  }}
+           {{ form_errors(form.name) }}
+           {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+       </div>
+       <br />
+       <div>
+            {{ form_label(form.menuurl)  }}
+            {{ form_errors(form.menuurl) }}
+            {{ form_widget(form.menuurl, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <br />
+       <div>
+            {{ form_label(form.save)  }}
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+        </div>
+      {{ form_end(form) }}
+
+    </div>
+  </div>
+</div>
+</section>
+{% endblock %}

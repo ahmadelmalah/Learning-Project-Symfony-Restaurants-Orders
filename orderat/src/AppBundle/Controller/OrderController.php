@@ -145,30 +145,4 @@ class OrderController extends Controller
             'forder' => $forder
         ]);
     }
-
-
-    /**
-     * @Route("/restaurants/new", name="restaurants-new")
-     */
-    public function newRestaurantAction(Request $request)
-    {
-          $restaurant = new Restaurant();
-          $form = $this->createForm(RestaurantType::class, $restaurant);
-          $form->handleRequest($request);
-
-          if ($form->isSubmitted() && $form->isValid()) {
-
-                  $em = $this->getDoctrine()->getManager();
-                  $em->persist($restaurant);
-                  $em->flush();
-
-                  return new Response('posted');
-                  return $this->redirectToRoute('/');
-              }
-
-          return $this->render('default/index.html.twig', [
-              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-              'form' => $form->createView(),
-          ]);
-    }
 }
