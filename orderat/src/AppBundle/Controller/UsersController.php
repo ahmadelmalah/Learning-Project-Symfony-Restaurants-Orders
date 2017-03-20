@@ -15,11 +15,26 @@ class UsersController extends FOSRestController
   * @Route("/test", name="test")
   * @Route("/api/test", name="testok")
    */
-    public function getUsersAction()
+    public function getUsersAction(Request $request)
     {
         $user = $this->getDoctrine()
         ->getRepository('AppBundle:Restaurant')
         ->findAll();
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $user,
+            $request->query->getInt('page', 2),
+            3
+        );
+        //return new Response('dome');
+        return $this->render('test.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'pagination' => $pagination
+        ]);
+
+        // parameters to template
+        return $this->render('AcmeMainBundle:Article:list.html.twig', array('pagination' => $pagination));
 
         $str = array();
         foreach ($user as $key => $value) {

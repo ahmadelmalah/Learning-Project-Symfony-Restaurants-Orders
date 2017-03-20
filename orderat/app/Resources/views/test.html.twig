@@ -1,0 +1,10 @@
+ {{ pagination.getTotalItemCount }}
+
+<table>
+ {% for restaurant in pagination %}
+ <tr {% if loop.index is odd %}class="color"{% endif %}>
+     <td>{{ restaurant.id }}</td>
+     <td>{{ restaurant.name }}</td>
+ </tr>
+ {% endfor %}
+ </table>

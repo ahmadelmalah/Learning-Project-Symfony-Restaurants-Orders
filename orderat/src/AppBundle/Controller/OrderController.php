@@ -23,7 +23,7 @@ class OrderController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $forders = $this->get('app.OrderService')->getOrders('active');
+        $forders = $this->get('app.OrderService')->getOrders('active', $request->query->getInt('page', 1));
         return $this->render('default/content/active.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forders' => $forders
@@ -35,7 +35,7 @@ class OrderController extends Controller
      */
     public function archiveAction(Request $request)
     {
-        $forders = $this->get('app.OrderService')->getOrders('archive');
+        $forders = $this->get('app.OrderService')->getOrders('archive', $request->query->getInt('page', 1));
         return $this->render('default/content/archive.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forders' => $forders

@@ -7,16 +7,20 @@ class OrderService
 {
     protected $em;
     protected $user;
+    protected $knp_paginator;
+
+    const NUM_PAGES = 3;
 
     /**
     * Helper constructor.
     * @param EntityManager $entityManager
     * @param StateRepository $stateRepository
     */
-     public function __construct(EntityManager $entityManager, $iUser)
+     public function __construct(EntityManager $entityManager, $iUser, $knp_paginator_service)
      {
          $this->em = $entityManager;
          $this->user = $iUser;
+         $this->knp_paginator = $knp_paginator_service;
      }
 
      /*
@@ -29,7 +33,7 @@ class OrderService
 
         //Initial Values
         $state = $em->getRepository('AppBundle:state')->find(1); //active
-        
+
         $forder->setState($state);
         $forder->setUser($user);
         $forder->setCreatedAt(new \DateTime("now"));
@@ -106,7 +110,7 @@ class OrderService
     * Gets some orders according to some filters
     * Here we use state as a filter
     */
-    public function getOrders($section){
+    public function getOrders($section, $start = 1){
         if($section == 'active'){
           $filter = array('state' => array(1, 2, 3));
         }elseif($section == 'archive'){
@@ -114,6 +118,16 @@ class OrderService
         }
         $em = $this->em;
         $forders = $em->getRepository('AppBundle:Forder')->findBy($filter);
+
+        //Pagination Process
+        $pagination = $this->knp_paginator->paginate(
+            $forders,
+            $start,
+             self::NUM_PAGES
+        );
+
+        return $pagination;
+
         return $forders;
     }
 }

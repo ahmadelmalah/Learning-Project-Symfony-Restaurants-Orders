@@ -1,6 +1,6 @@
 {% extends 'default/index.html.twig' %}
 
-{% block content_title %}Archived Orders{% endblock %}
+{% block content_title %}Archived Orders ({{ forders.getTotalItemCount }} Orders){% endblock %}
 
 {% block content %}
 
@@ -9,5 +9,9 @@
 {% include 'default/content/order/component/order.html.twig' %}
 
 {% endfor %}
+
+<div class="navigation">
+  {{ knp_pagination_render(forders) }}
+</div>
 
 {% endblock %}
