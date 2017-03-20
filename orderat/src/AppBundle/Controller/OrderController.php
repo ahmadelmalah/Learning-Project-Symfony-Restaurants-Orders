@@ -15,30 +15,34 @@ use AppBundle\Entity\Item;
 use AppBundle\Form\RestaurantType;
 use AppBundle\Form\ForderType;
 use AppBundle\Form\ItemType;
+use AppBundle\Form\FilterType;
 
 class OrderController extends Controller
 {
     /**
      * @Route("/active", name="active")
-     */
-    public function indexAction(Request $request)
-    {
-        $forders = $this->get('app.OrderService')->getOrders('active', $request->query->getInt('page', 1));
-        return $this->render('default/content/active.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-            'forders' => $forders
-        ]);
-    }
-
-    /**
      * @Route("/archive", name="archive")
      */
-    public function archiveAction(Request $request)
+    public function showOrdersAction(Request $request)
     {
-        $forders = $this->get('app.OrderService')->getOrders('archive', $request->query->getInt('page', 1));
-        return $this->render('default/content/archive.html.twig', [
+        $form = $this->createForm(FilterType::class);
+        $form->handleRequest($request);
+
+        $filter_restaurant = null;
+        if ($form->isSubmitted() && $form->isValid()) {
+            $filter_restaurant = $form->getData()['restaurant']->getID();
+        }
+
+        $forders = $this->get('app.OrderService')->getOrders(
+          $request->get('_route'),
+          $request->query->getInt('page', 1),
+          $filter_restaurant
+        );
+
+        return $this->render('default/content/active.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-            'forders' => $forders
+            'forders' => $forders,
+            'form_filter' => $form->createView(),
         ]);
     }
 

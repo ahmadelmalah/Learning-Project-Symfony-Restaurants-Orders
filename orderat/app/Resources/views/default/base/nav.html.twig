@@ -18,12 +18,20 @@
 <li class="{% if app.request.attributes.get('_route') == 'active' %}active{% endif %}"><a href="/"> Active Orders </a></li>
 <li class="{% if app.request.attributes.get('_route') == 'new' %}active{% endif %}"><a href="/new">New Order</a></li>
 </ul>
-<form class="navbar-form navbar-left">
-<div class="form-group">
-  <input type="text" class="form-control" placeholder="Search">
-</div>
-<button type="submit" class="btn btn-default">Search</button>
-</form>
+
+{% if form_filter is defined %}
+
+  {{ form_start(form_filter, {'attr': {'class': 'navbar-form navbar-left'}}) }}
+       {{ form_label(form_filter.restaurant, ' ')  }}
+       {{ form_errors(form_filter.restaurant) }}
+       {{ form_widget(form_filter.restaurant, {'attr': {'class': 'form-control'}}) }}
+
+        {{ form_label(form_filter.save)  }}
+        {{ form_widget(form_filter.save, {'attr': {'class': 'btn btn-default'}, 'label': 'Filter'}) }}
+  {{ form_end(form_filter) }}
+
+{% endif %}
+
 <ul class="nav navbar-nav navbar-right">
 <li><a> Welcome, {{ app.user.username }} </a></li>
 <li><a href="/logout">Logout</a></li>

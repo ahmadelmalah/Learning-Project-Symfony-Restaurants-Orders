@@ -110,12 +110,19 @@ class OrderService
     * Gets some orders according to some filters
     * Here we use state as a filter
     */
-    public function getOrders($section, $start = 1){
+    public function getOrders($section, $start = 1, $restaurantID){
+        $filter = array();
+        //Section Filtration
         if($section == 'active'){
-          $filter = array('state' => array(1, 2, 3));
+          $filter['state'] = array(1, 2, 3);
         }elseif($section == 'archive'){
-          $filter = array('state' => array(4, 5));
+          $filter['state'] = array(4,5);
         }
+        //Restaurant Filtration
+        if($restaurantID){
+          $filter['restaurant'] = $restaurantID;
+        }
+
         $em = $this->em;
         $forders = $em->getRepository('AppBundle:Forder')->findBy($filter);
 
