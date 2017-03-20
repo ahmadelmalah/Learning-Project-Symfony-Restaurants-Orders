@@ -56,7 +56,7 @@ class OrderController extends Controller
        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('app.OrderService')->create($forder);
-            return $this->redirectToRoute('active');
+            return $this->redirectToRoute('showOrder', array('id' => $forder->getID()));
         }
 
         return $this->render('default/content/new.html.twig', [
