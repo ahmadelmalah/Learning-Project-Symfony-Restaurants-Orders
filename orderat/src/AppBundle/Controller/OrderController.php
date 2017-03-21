@@ -22,32 +22,31 @@ class OrderController extends Controller
     /**
      * @Route("/active", name="active")
      * @Route("/archive", name="archive")
+
+     * @Route("/api/orders/active", name="apiActiveOrders")
+     * @Route("/api/orders/archive", name="apiArchiveOrders")
      */
     public function showOrdersAction(Request $request)
     {
         $form = $this->createForm(FilterType::class, array('n' => 'name'));
         $form->handleRequest($request);
 
-        // $filter_restaurant = null;
-        // // if ($form->isSubmitted() && $form->isValid()) {
-        // //     $filter_restaurant = $form->getData()['restaurant']->getID();
-        // // }
-        // $x = null;
-        // $x = ;
-        // return new Response($x['restaurant']);
-
         $forders = $this->get('app.OrderService')->getOrders(
-          $request->get('_route'),
-          $request->query->getInt('page', 1),
-          $request->query->get('filter')
-          //$filter_restaurant
+          $request->get('_route'), //$section parm: current route
+          $request->query->getInt('page', 1), //$Page parm
+          $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
-        return $this->render('default/content/active.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-            'forders' => $forders,
-            'form_filter' => $form->createView(),
-        ]);
+        if($request->get('_route') =='active' || $request->get('_route') == 'archive'){
+          return $this->render('default/content/active.html.twig', [
+              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+              'forders' => $forders,
+              'form_filter' => $form->createView(),
+          ]);
+        }
+
+        //API Logic Goes Here
+        return new Response('API');
     }
 
     /**
