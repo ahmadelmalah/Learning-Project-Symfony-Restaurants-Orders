@@ -44,6 +44,11 @@ class OrderService
 
     public function changeOrderState($forder, $nextState, $price = null){
       $em = $this->em;
+      $user = $this->user;
+
+      if($user->getID() != $forder->getUser()->getID()){
+        return;
+      }
 
       $state = $em->getRepository('AppBundle:State')->find($nextState);
       $forder->setState($state);
