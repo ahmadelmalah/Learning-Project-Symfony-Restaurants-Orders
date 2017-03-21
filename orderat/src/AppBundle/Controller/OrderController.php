@@ -107,7 +107,7 @@ class OrderController extends Controller
      */
     public function readyAction(Request $request, $forder)
     {
-        $this->get('app.OrderService')->ready($forder);
+        $this->get('app.OrderService')->changeOrderState($forder, 2); //change it to ready
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
@@ -120,7 +120,7 @@ class OrderController extends Controller
      */
     public function callAction(Request $request, $forder)
     {
-        $this->get('app.OrderService')->call($forder);
+        $this->get('app.OrderService')->changeOrderState($forder, 3);
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
@@ -134,7 +134,7 @@ class OrderController extends Controller
     public function deliverAction(Request $request, $forder)
     {
         $price = $request->get('price');
-        $this->get('app.OrderService')->deliver($forder, $price);
+        $this->get('app.OrderService')->changeOrderState($forder, 4, $price);
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
@@ -147,7 +147,7 @@ class OrderController extends Controller
      */
     public function completeAction(Request $request, $forder)
     {
-        $this->get('app.OrderService')->complete($forder);
+        $this->get('app.OrderService')->changeOrderState($forder, 5);
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder

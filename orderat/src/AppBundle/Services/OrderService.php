@@ -42,68 +42,23 @@ class OrderService
         $em->flush();
     }
 
-    /*
-    * Changes an order state to ready
-    */
-    public function ready($forder)
-    {
-        $em = $this->em;
+    public function changeOrderState($forder, $nextState, $price = null){
+      $em = $this->em;
 
-        $state = $em->getRepository('AppBundle:State')->find(2); //ready
+      $state = $em->getRepository('AppBundle:State')->find($nextState);
+      $forder->setState($state);
 
-        $forder->setState($state);
+      if($nextState == 3){ //if it changed to called
+          $forder->setCalledAt(new \DateTime("now"));
+      }elseif($nextState == 4){ //if it changed to delivered
+          $forder->setDeliveredAt(new \DateTime("now"));
+          $forder->setPrice($price);
+      }elseif($nextState == 5){ //if it changed to completed
+          $forder->setCompletedAt(new \DateTime("now"));
+      }
 
-        $em->persist($forder);
-        $em->flush();
-    }
-
-    /*
-    * Changes an order state to called
-    */
-    public function call($forder)
-    {
-        $em = $this->em;
-
-        $state = $em->getRepository('AppBundle:State')->find(3); //waiting
-
-        $forder->setState($state);
-        $forder->setCalledAt(new \DateTime("now"));
-
-        $em->persist($forder);
-        $em->flush();
-    }
-
-    /*
-    * Changes an order state to delivered
-    */
-    public function deliver($forder, $price)
-    {
-        $em = $this->em;
-
-        $state = $em->getRepository('AppBundle:State')->find(4); //delivered
-
-        $forder->setState($state);
-        $forder->setPrice($price);
-        $forder->setCalledAt(new \DateTime("now"));
-
-        $em->persist($forder);
-        $em->flush();
-    }
-
-    /*
-    * Changes an order state to completed
-    */
-    public function complete($forder)
-    {
-        $em = $this->em;
-
-        $state = $em->getRepository('AppBundle:State')->find(5); //complete
-
-        $forder->setState($state);
-        $forder->setCalledAt(new \DateTime("now"));
-
-        $em->persist($forder);
-        $em->flush();
+      $em->persist($forder);
+      $em->flush();
     }
 
     /*
@@ -114,7 +69,7 @@ class OrderService
         $em = $this->em;
 
         $queryFilter = $this->getQueryFilterFromUrlFilter($section, $urlFilter);
-        
+
         $forders = $em->getRepository('AppBundle:Forder')->findBy($queryFilter);
 
         //Pagination Process
