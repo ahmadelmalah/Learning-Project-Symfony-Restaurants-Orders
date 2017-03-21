@@ -9,7 +9,7 @@ class OrderService
     protected $user;
     protected $knp_paginator;
 
-    const NUM_PAGES = 3;
+    const NUM_PAGES = 1;
 
     /**
     * Helper constructor.
@@ -110,21 +110,12 @@ class OrderService
     * Gets some orders according to some filters
     * Here we use state as a filter
     */
-    public function getOrders($section, $start = 1, $restaurantID){
-        $filter = array();
-        //Section Filtration
-        if($section == 'active'){
-          $filter['state'] = array(1, 2, 3);
-        }elseif($section == 'archive'){
-          $filter['state'] = array(4,5);
-        }
-        //Restaurant Filtration
-        if($restaurantID){
-          $filter['restaurant'] = $restaurantID;
-        }
-
+    public function getOrders($section, $start = 1, $urlFilter = null){
         $em = $this->em;
-        $forders = $em->getRepository('AppBundle:Forder')->findBy($filter);
+
+        $queryFilter = $this->getQueryFilterFromUrlFilter($section, $urlFilter);
+        
+        $forders = $em->getRepository('AppBundle:Forder')->findBy($queryFilter);
 
         //Pagination Process
         $pagination = $this->knp_paginator->paginate(
@@ -134,7 +125,29 @@ class OrderService
         );
 
         return $pagination;
+    }
 
-        return $forders;
+    public function getQueryFilterFromUrlFilter($section, $urlFilter = null){
+        $queryFilter = array();
+
+        //Section Filtration
+        if($section == 'active'){
+          $queryFilter['state'] = array(1, 2, 3);
+        }elseif($section == 'archive'){
+          $queryFilter['state'] = array(4,5);
+        }
+
+        //Additional Filtrations from URL
+        if($urlFilter['restaurant']){
+          $queryFilter['restaurant'] = $urlFilter['restaurant'];
+        }
+        if($urlFilter['state']){
+          $queryFilter['state'] = $urlFilter['state'];
+        }
+        if(isset($urlFilter['myorders']) && $urlFilter['myorders'] == 1){
+          $queryFilter['user'] = $this->user->getID();
+        }
+
+        return $queryFilter;
     }
 }

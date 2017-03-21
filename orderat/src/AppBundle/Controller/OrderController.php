@@ -25,18 +25,22 @@ class OrderController extends Controller
      */
     public function showOrdersAction(Request $request)
     {
-        $form = $this->createForm(FilterType::class);
+        $form = $this->createForm(FilterType::class, array('n' => 'name'));
         $form->handleRequest($request);
 
-        $filter_restaurant = null;
-        if ($form->isSubmitted() && $form->isValid()) {
-            $filter_restaurant = $form->getData()['restaurant']->getID();
-        }
+        // $filter_restaurant = null;
+        // // if ($form->isSubmitted() && $form->isValid()) {
+        // //     $filter_restaurant = $form->getData()['restaurant']->getID();
+        // // }
+        // $x = null;
+        // $x = ;
+        // return new Response($x['restaurant']);
 
         $forders = $this->get('app.OrderService')->getOrders(
           $request->get('_route'),
           $request->query->getInt('page', 1),
-          $filter_restaurant
+          $request->query->get('filter')
+          //$filter_restaurant
         );
 
         return $this->render('default/content/active.html.twig', [
