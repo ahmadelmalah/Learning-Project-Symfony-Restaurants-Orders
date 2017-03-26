@@ -9,7 +9,7 @@ class OrderService
     protected $user;
     protected $knp_paginator;
 
-    const NUM_PAGES = 1;
+    const NUM_PAGES = 5;
 
     /**
     * Helper constructor.

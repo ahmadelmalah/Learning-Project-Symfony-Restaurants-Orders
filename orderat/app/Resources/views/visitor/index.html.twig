@@ -1,47 +1,93 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Home</title>
+<link href="https://priteshgupta.com/demos/templates/connoisseur/styles/style.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="https://priteshgupta.com/demos/templates/connoisseur/styles/base.css" rel="stylesheet" type="text/css" media="screen"/>
+<script type="text/javascript" src=" https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.js"></script>
+<script type="text/javascript" src="https://priteshgupta.com/demos/templates/connoisseur/scripts/jquery.pikachoose.js"></script>
+<script type="text/javascript">
+				$(document).ready(function() {
+				$("#pikame").PikaChoose();	});
+	</script>
+</head>
+<body>
+<div id="container">
+<header>
+<nav>
+<ul id="nav">
+<li><a href="/" class="current">Home</a></li>
+<li><a href="login">Login</a></li>
+<li><a href="#">About</a></li>
+</ul>
+</nav>
+<hgroup class="intro">
+<h1 class="title">Food Orders Management</h1>
+<h3 class="tagline">Diet is an illusion, is not it?</h3>
+</hgroup>
+<div class="reservations"><br/>
+<span class="reservations-title">Let's Join?</span>
+<hr class="hr-solid"/>
+<span class="phone-number">Register Now</span>
+<hr class="hr-dashed"/>
+<div class="email-us"> <a class="button" href="register" title="Email Us">Sign Up</a> </div>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+</header>
+<div class="wrapper">
+<div class="pikachoose">
+<ul id="pikame">
+<li><a href=""><img src="https://priteshgupta.com/demos/templates/connoisseur/images/home/1.jpg" alt=""/></a></li>
+<li><a href=""><img src="https://priteshgupta.com/demos/templates/connoisseur/images/home/2.jpg" alt=""/></a></li>
+<li><a href=""><img src="https://priteshgupta.com/demos/templates/connoisseur/images/home/3.jpg" alt=""/></a></li>
+<li><a href=""><img src="https://priteshgupta.com/demos/templates/connoisseur/images/home/4.jpg" alt=""/></a></li>
+</ul>
+</div>
+<div class="clear"></div>
+<div class="border"></div>
+<div class="home-widget">
+<h3>Lorem Ipsum</h3>
+<img src="https://priteshgupta.com/demos/templates/connoisseur/images/home/3.jpg" width="300" alt=""/>
+<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae.</p>
+</div>
+<div class="home-widget">
+<h3>Lorem Ipsum</h3>
+<img src="https://priteshgupta.com/demos/templates/connoisseur/images/home/4.jpg" width="300" alt=""/>
+<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae.</p>
+</div>
+<div class="home-widget">
+<h3>Lorem Ipsum</h3>
+<img src="https://priteshgupta.com/demos/templates/connoisseur/images/home/1.jpg" width="300" alt=""/>
+<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae.</p>
+</div>
+</div>
+<footer>
+<div class="border"></div>
 
-{% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1><span>Welcome to</span> Orderat Application</h1>
-            </div>
-
-            <div id="status">
-                <p>
-                    You can login to manage your account, or register a new account
-                </p>
-            </div>
-            <a href="register" class="btn btn-primary">Sing Up</a>
-            <a href="login" class="btn btn-success">Login</a>
-    </div>
-{% endblock %}
-
-{% block stylesheets %}
-<style>
-    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
-    h1 { font-size: 36px; }
-    h2 { font-size: 21px; margin-bottom: 1em; }
-    p { margin: 0 0 1em 0; }
-    a { color: #0000F0; }
-    a:hover { text-decoration: none; }
-    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
-    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-    #container { padding: 2em; }
-    #welcome, #status { margin-bottom: 2em; }
-    #welcome h1 span { display: block; font-size: 75%; }
-    #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
-    #icon-book { display: none; }
-
-    @media (min-width: 768px) {
-        #wrapper { width: 80%; margin: 2em auto; }
-        #icon-book { display: inline-block; }
-        #status a, #next a { display: block; }
-
-        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
-    }
-</style>
-{% endblock %}
+<br/>
+<span class="copyright"><span class="left"><br/>
+&copy; Copyright 2017 - All Rights Reserved - <a href="#">Softxpert</a></span><span class="right"><br/>
+Design by <a href="http://www.priteshgupta.com">PriteshGupta.com</a><br/>
+<br>
+<br/>
+</span></span></footer>
+</div>
+</body>
+</html>
