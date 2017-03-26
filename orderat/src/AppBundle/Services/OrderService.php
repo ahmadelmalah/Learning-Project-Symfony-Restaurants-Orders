@@ -91,9 +91,9 @@ class OrderService
         $queryFilter = array();
 
         //Section Filtration
-        if($section == 'active'){
+        if($section == 'active' || $section == 'apiActiveOrders'){
           $queryFilter['state'] = array(1, 2, 3);
-        }elseif($section == 'archive'){
+        }elseif($section == 'archive' || $section == 'apiArchiveOrders'){
           $queryFilter['state'] = array(4,5);
         }
 

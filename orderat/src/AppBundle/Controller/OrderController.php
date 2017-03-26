@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\FOSRestController;
-
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 use AppBundle\Entity\Restaurant;
 use AppBundle\Entity\Forder;
@@ -49,11 +51,21 @@ class OrderController extends FOSRestController
         }
 
         //API Logic Goes Here
-        $view = $this->view($forders, 200);
+
+        $encoder = new JsonEncoder();
+        $normalizer = new GetSetMethodNormalizer();
+        $serializer = new Serializer(array($normalizer), array($encoder));
+
+        $normalizer->setIgnoredAttributes(array('state', 'user', 'restaurant'));
+        $normalizer->setCircularReferenceHandler(function ($object) {
+           return $object->getID();
+        });
+
+        $ser = $serializer->serialize($forders, 'json');
+
+        $view = $this->view($ser, 200);
         $view->setFormat('json');
         return $this->handleView($view);
-        dump($forders); die();
-        return new Response('API');
     }
 
     /**
