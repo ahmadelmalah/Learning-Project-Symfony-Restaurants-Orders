@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class ItemRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTotal(){
+      return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(i) FROM AppBundle:Item i'
+            )
+            ->getSingleScalarResult();
+    }
 }

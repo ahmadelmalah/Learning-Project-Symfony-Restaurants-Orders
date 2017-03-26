@@ -15,3 +15,7 @@ services:
      app.ItemService:
        class: AppBundle\Services\ItemService
        arguments: ['@doctrine.orm.entity_manager', "@=service('security.token_storage').getToken().getUser()"]
+
+     app.AdminService:
+       class: AppBundle\Services\AdminService
+       arguments: ['@doctrine.orm.entity_manager']

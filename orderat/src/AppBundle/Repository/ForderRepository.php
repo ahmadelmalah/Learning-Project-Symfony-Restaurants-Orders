@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class ForderRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTotal(){
+      return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(f) FROM AppBundle:Forder f'
+            )
+            ->getSingleScalarResult();
+    }
 }

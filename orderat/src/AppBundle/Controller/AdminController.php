@@ -19,7 +19,17 @@ class AdminController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('admin/content/main.html.twig');
+        $count_users = $this->get('app.AdminService')->getTotal('users');
+        $count_restaurants = $this->get('app.AdminService')->getTotal('restaurants');
+        $count_forders = $this->get('app.AdminService')->getTotal('forders');
+        $count_items = $this->get('app.AdminService')->getTotal('items');
+
+        return $this->render('admin/content/main.html.twig', [
+          'count_users' => $count_users,
+          'count_restaurants' => $count_restaurants,
+          'count_forders' => $count_forders,
+          'count_items' => $count_items,
+        ] );
     }
 
     /**
