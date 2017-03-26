@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use FOS\RestBundle\Controller\FOSRestController;
+
+
 use AppBundle\Entity\Restaurant;
 use AppBundle\Entity\Forder;
 use AppBundle\Entity\Item;
@@ -17,7 +20,7 @@ use AppBundle\Form\ForderType;
 use AppBundle\Form\ItemType;
 use AppBundle\Form\FilterType;
 
-class OrderController extends Controller
+class OrderController extends FOSRestController
 {
     /**
      * @Route("/active", name="active")
@@ -46,6 +49,10 @@ class OrderController extends Controller
         }
 
         //API Logic Goes Here
+        $view = $this->view($forders, 200);
+        $view->setFormat('json');
+        return $this->handleView($view);
+        dump($forders); die();
         return new Response('API');
     }
 
