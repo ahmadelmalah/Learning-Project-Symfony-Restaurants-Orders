@@ -29,6 +29,7 @@ class AdminController extends Controller
           'count_restaurants' => $count_restaurants,
           'count_forders' => $count_forders,
           'count_items' => $count_items,
+          'admin_name' => $this->getUser()->getUsername()
         ] );
     }
 
@@ -53,6 +54,7 @@ class AdminController extends Controller
           return $this->render('admin/content/new-restaurant.html.twig', [
               'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
               'form' => $form->createView(),
+              'admin_name' => $this->getUser()->getUsername()
           ]);
     }
 }
