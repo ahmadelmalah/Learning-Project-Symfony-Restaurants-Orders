@@ -34,8 +34,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li class="active"><a href="/admin"><i class="fa fa-circle-o"></i> Main Page</a></li>
-          <li><a href="/admin/new-restaurant"><i class="fa fa-circle-o"></i> New Restaurant</a></li>
+          <li class="{% if app.request.attributes.get('_route') == 'admin' %}active{% endif %}"><a href="/admin"><i class="fa fa-circle-o"></i> Main Page</a></li>
+          <li class="{% if app.request.attributes.get('_route') == 'admin-new-restaurant' %}active{% endif %}"><a href="/admin/new-restaurant"><i class="fa fa-circle-o"></i> New Restaurant</a></li>
         </ul>
       </li>
       <li class="treeview">
