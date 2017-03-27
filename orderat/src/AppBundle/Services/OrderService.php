@@ -9,7 +9,7 @@ class OrderService
     protected $user;
     protected $knp_paginator;
 
-    const NUM_PAGES = 5;
+    const NUM_PAGES = 1;
 
     /**
     * Helper constructor.
@@ -98,13 +98,13 @@ class OrderService
         }
 
         //Additional Filtrations from URL
-        if($urlFilter['restaurant']){
+        if(isset($urlFilter['restaurant']) && $urlFilter['restaurant']){
           $queryFilter['restaurant'] = $urlFilter['restaurant'];
         }
-        if($urlFilter['state']){
+        if(isset($urlFilter['state']) && $urlFilter['state']){
           $queryFilter['state'] = $urlFilter['state'];
         }
-        if(isset($urlFilter['myorders']) && $urlFilter['myorders'] == 1){
+        if(isset($urlFilter['myorders']) && $urlFilter['myorders'] === 1){
           $queryFilter['user'] = $this->user->getID();
         }
 
