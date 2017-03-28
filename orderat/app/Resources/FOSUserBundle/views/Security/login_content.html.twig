@@ -1,13 +1,13 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% if error %}
+  <div class="alert alert-danger">
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+  </div>
 {% endif %}
 
-<div class="container">
-
 <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
-    <h2 class="form-signin-heading">Please sign in</h2>
+
     {% if csrf_token %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     {% endif %}
@@ -24,7 +24,5 @@
       </label>
     </div>
 
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-lg btn-primary btn-block">
+    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-md btn-primary btn-block">
 </form>
-
-</div>

@@ -19,7 +19,7 @@ class DefaultController extends FOSRestController
     public function indexAction(Request $request)
     {
         if ($this->isGranted('ROLE_USER') == false) {
-          return $this->render('visitor/index.html.twig', [
+          return $this->render('default/content/visitor/index.html.twig', [
               'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
           ]);
         }

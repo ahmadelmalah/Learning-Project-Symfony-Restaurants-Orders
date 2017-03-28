@@ -75,8 +75,7 @@ class OrderService
 
         $queryFilter = $this->getQueryFilterFromUrlFilter($section, $urlFilter);
 
-        $forders = $em->getRepository('AppBundle:Forder')->findBy($queryFilter);
-
+        $forders = $em->getRepository('AppBundle:Forder')->findBy($queryFilter, array('id' => 'DESC'));
         //Pagination Process
         $pagination = $this->knp_paginator->paginate(
             $forders,
