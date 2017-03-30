@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -97,13 +98,20 @@ class OrderController extends FOSRestController
        $form = $this->createForm(ItemType::class, $item);
        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('app.ItemService')->create($item, $forder);
-            return $this->redirectToRoute('active');
+            if ($this->get('app.ItemService')->create($item, $forder) ){
+                $this->get('session')->getFlashBag()->add('ItemAdded', "Your Item {$item->getName()} was added successfuly");
+            }else{
+              $this->get('session')->getFlashBag()->add('ItemNotAdded', "Your Item {$item->getName()} was not add, This order doesn't recieve more items!");
+            }
+
+
+            return $this->redirectToRoute("addItems", array('id' => $forder->getID()));
         }
 
         return $this->render('default/content/order/add.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'form' => $form->createView(),
+            'href_backToOrder' => "/orders/{$forder->getID()}/show"
         ]);
     }
 

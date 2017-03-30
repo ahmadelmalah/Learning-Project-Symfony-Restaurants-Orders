@@ -27,10 +27,15 @@ class ItemService
       $em = $this->em;
       $user = $this->user;
 
-      $item->setForder($forder);
-      $item->setUser($user);
+      if ($forder->getState()->getID() == 1){
+        $item->setForder($forder);
+        $item->setUser($user);
 
-      $em->persist($item);
-      $em->flush();
+        $em->persist($item);
+        $em->flush();
+        return true;
+      }else{
+        return false;
+      }
     }
 }

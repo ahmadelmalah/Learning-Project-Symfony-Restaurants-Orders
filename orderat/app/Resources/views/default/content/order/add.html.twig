@@ -7,7 +7,20 @@
 
   <h1>Eat what you love</h1>
   <p>but take care of your health </p>
-  {{ form_start(form) }}
+
+  {% for flashMessage in app.session.flashbag.get('ItemAdded') %}
+      <div class="alert alert-success">
+        {{ flashMessage }}
+      </div>
+  {% endfor %}
+
+  {% for flashMessage in app.session.flashbag.get('ItemNotAdded') %}
+      <div class="alert alert-danger">
+        {{ flashMessage }}
+      </div>
+  {% endfor %}
+
+{{ form_start(form) }}
   <div>
        {{ form_label(form.name)  }}
        {{ form_errors(form.name) }}
@@ -23,6 +36,7 @@
    <div>
         {{ form_label(form.save)  }}
         {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+        <a href="{{href_backToOrder}}" class="btn btn-default btn-lg">Back to order</a>
     </div>
   {{ form_end(form) }}
 
