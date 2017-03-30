@@ -32,7 +32,9 @@
        {{ form_errors(form_filter.state) }}
        {{ form_widget(form_filter.state, {'attr': {'class': 'form-control'}}) }}
 
-       {{ form_label(form_filter.myorders)  }}
+       My orders only
+       <!-- This is badpractise, we should edit label style instead of that -->
+       <!-- {{ form_label(form_filter.myorders,'' , {'label_attr': {'style': 'font-weight: 1700; '}})  }} -->
        {{ form_errors(form_filter.myorders) }}
        {{ form_widget(form_filter.myorders, {'attr': {'class': 'form-control'}}) }}
 
