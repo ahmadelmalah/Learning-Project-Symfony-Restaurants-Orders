@@ -93,7 +93,7 @@ class OrderService
         return $pagination;
     }
 
-    public function getQueryFilterFromUrlFilter($section, $urlFilter = null){
+    static function getQueryFilterFromUrlFilter($section, $urlFilter = null){
         $queryFilter = array();
 
         //Section Filtration
@@ -115,5 +115,9 @@ class OrderService
         }
 
         return $queryFilter;
+    }
+
+    static function forTest(){
+      return 'hey';
     }
 }
