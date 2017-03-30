@@ -4,6 +4,12 @@
 
 {% block content %}
 
+{% for flashMessage in app.session.flashbag.get('OrderNotChanged') %}
+    <div class="alert alert-danger">
+      {{ flashMessage }}
+    </div>
+{% endfor %}
+
 {% include 'default/content/order/component/order.html.twig' %}
 
 {% endblock %}

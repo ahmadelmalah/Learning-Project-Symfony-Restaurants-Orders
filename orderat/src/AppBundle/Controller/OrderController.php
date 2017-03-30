@@ -133,7 +133,9 @@ class OrderController extends FOSRestController
      */
     public function readyAction(Request $request, $forder)
     {
-        $this->get('app.OrderService')->changeOrderState($forder, 2); //change it to ready
+        if ($this->get('app.OrderService')->changeOrderState($forder, 2) == false){
+          $this->get('session')->getFlashBag()->add('OrderNotChanged', "Not enough items!");
+        }
         return $this->render('default/content/order/show.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder

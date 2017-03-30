@@ -46,8 +46,14 @@ class OrderService
       $em = $this->em;
       $user = $this->user;
 
+      //Validation
       if($user->getID() != $forder->getUser()->getID()){
         return;
+      }
+      if($nextState == 2){ //if it changed to ready
+          if ( $forder->getItems()->count()  == 0 ){
+            return false;
+          }
       }
 
       $state = $em->getRepository('AppBundle:State')->find($nextState);
@@ -64,6 +70,7 @@ class OrderService
 
       $em->persist($forder);
       $em->flush();
+      return true;
     }
 
     /*
@@ -103,7 +110,7 @@ class OrderService
         if(isset($urlFilter['state']) && $urlFilter['state']){
           $queryFilter['state'] = $urlFilter['state'];
         }
-        if(isset($urlFilter['myorders']) && $urlFilter['myorders'] === 1){
+        if(isset($urlFilter['myorders']) && $urlFilter['myorders'] == 1){
           $queryFilter['user'] = $this->user->getID();
         }
 
