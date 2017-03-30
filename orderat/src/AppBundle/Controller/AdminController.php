@@ -19,6 +19,7 @@ class AdminController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $count_users = $this->get('app.AdminService')->getTotal('users');
         $count_restaurants = $this->get('app.AdminService')->getTotal('restaurants');
         $count_forders = $this->get('app.AdminService')->getTotal('forders');
@@ -38,6 +39,7 @@ class AdminController extends Controller
      */
     public function newRestaurantAction(Request $request)
     {
+          $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
           $restaurant = new Restaurant();
           $form = $this->createForm(RestaurantType::class, $restaurant);
           $form->handleRequest($request);

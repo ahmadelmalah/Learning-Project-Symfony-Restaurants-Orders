@@ -1,5 +1,13 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_ADMIN') %}
+<div class="alert alert-warning" role="alert">
+  <strong>Security Alert!</strong>
+  <br /> You are logged in based on your remember me cockies, which allows you to act as a user.
+  <br />Please re-login if you want to access admin area.
+</div>
+{% endif %}
+
 {% if error %}
   <div class="alert alert-danger">
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>

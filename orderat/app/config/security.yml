@@ -62,4 +62,4 @@ security:
         - { path: ^/orders, roles: ROLE_USER }
         - { path: ^/restaurants, roles: ROLE_USER }
 
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
