@@ -28,16 +28,10 @@ class DefaultController extends FOSRestController
     }
 
     /**
-     * @Route("/test55", name="test55")
+     * @Route("/ajax/test", name="ajaxtest")
      */
     public function testAction(Request $request)
     {
-        $user = $this->getDoctrine()
-        ->getRepository('AppBundle:Restaurant')
-        ->find(2);
-          //  $view = $this->view($user);
-          // $view->setFormat('json');
-          // return $this->handleView($view);
-        return new Response( $user->getName() . 'o' );
+        return new Response( 'testsdsr v0' );
     }
 }

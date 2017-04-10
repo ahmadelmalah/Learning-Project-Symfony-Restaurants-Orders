@@ -7,25 +7,25 @@
 <!-- <div class="pagination"> -->
     {% if first is defined and current != first %}
         <!-- <span class="first"> -->
-            <li><a href="{{ path(route, query|merge({(pageParameterName): first})) }}">&lt;&lt;</a></li>
+            <li><a href="#" onclick="getOrders( {{ first }} )">&lt;&lt;</a></li>
         <!-- </span> -->
     {% endif %}
 
     {% if previous is defined %}
         <!-- <span class="previous"> -->
-            <li><a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&lt;</a></li>
+            <li><a href="#" onclick="getOrders( {{ previous }} )">&lt;</a></li>
         <!-- </span> -->
     {% endif %}
 
     {% for page in pagesInRange %}
         {% if page != current %}
             <!-- <span class="page"> -->
-                <li><a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a></li>
+                <li><a href="#" onclick="getOrders( {{ page }} )">{{ page }}</a></li>
             <!-- </span> -->
         {% else %}
             <!-- <span class="current"> -->
             <li class="active">
-              <a href="#">{{ page }} <span class="sr-only">(current)</span></a>
+              <a>{{ page }} <span class="sr-only">(current)</span></a>
             </li>
             <!-- </span> -->
         {% endif %}
@@ -34,13 +34,13 @@
 
     {% if next is defined %}
         <!-- <span class="next"> -->
-            <li><a href="{{ path(route, query|merge({(pageParameterName): next})) }}">&gt;</a></li>
+            <li><a href="#" onclick="getOrders( {{ next }} )">&gt;</a></li>
         <!-- </span> -->
     {% endif %}
 
     {% if last is defined and current != last %}
         <!-- <span class="last"> -->
-            <li><a href="{{ path(route, query|merge({(pageParameterName): last})) }}">&gt;&gt;</a></li>
+            <li><a href="#" onclick="getOrders( {{ last }} )">&gt;&gt;</a></li>
         <!-- </span> -->
     {% endif %}
 </div>

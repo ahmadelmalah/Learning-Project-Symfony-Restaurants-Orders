@@ -80,7 +80,7 @@ class OrderService
     public function getOrders($section, $start = 1, $urlFilter = null){
         $em = $this->em;
 
-        $queryFilter = $this->getQueryFilterFromUrlFilter($section, $urlFilter);
+        $queryFilter = $this->getQueryFilterFromUrlFilter($section, $urlFilter, $this->user->getID());
 
         $forders = $em->getRepository('AppBundle:Forder')->findBy($queryFilter, array('id' => 'DESC'));
         //Pagination Process
@@ -93,13 +93,13 @@ class OrderService
         return $pagination;
     }
 
-    static function getQueryFilterFromUrlFilter($section, $urlFilter = null){
+    static function getQueryFilterFromUrlFilter($section, $urlFilter = null, $userID = null){
         $queryFilter = array();
 
         //Section Filtration
-        if($section == 'active' || $section == 'apiActiveOrders'){
+        if($section == 'active' || $section == 'ajax-active' || $section == 'apiActiveOrders'){
           $queryFilter['state'] = array(1, 2, 3);
-        }elseif($section == 'archive' || $section == 'apiArchiveOrders'){
+        }elseif($section == 'archive' || $section == 'ajax-archive' || $section == 'apiArchiveOrders'){
           $queryFilter['state'] = array(4,5);
         }
 
@@ -111,7 +111,7 @@ class OrderService
           $queryFilter['state'] = $urlFilter['state'];
         }
         if(isset($urlFilter['myorders']) && $urlFilter['myorders'] == 1){
-          $queryFilter['user'] = $this->user->getID();
+          $queryFilter['user'] = $userID;
         }
 
         return $queryFilter;

@@ -2,20 +2,61 @@
 
 {% block content_title %}Active Orders, Now! ({{ forders.getTotalItemCount }} Orders){% endblock %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-bottom: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    display: none;
+    margin:0px auto
+  }
+
+  .col-centered{
+    float: none;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+  </style>
+{% endblock %}
+
 {% block content %}
 
-{% for forder in forders %}
+<!-- <div class="row" style="text-align: center;"> -->
+    <div id="loader" class="loader col-centered"></div>
+<!-- </div> -->
 
-{% include 'default/content/order/component/order.html.twig' %}
 
-{% endfor %}
-
-<div class="row">
-  <div class="col-md-4 col-md-offset-4">
-    <div class="navigation">
-      {{ knp_pagination_render(forders) }}
-    </div>
-  </div>
+<div id="orders">
+  {% for forder in forders %}
+  {% include 'default/content/order/component/order.html.twig' %}
+  {% endfor %}
 </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+     <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+     <script>
+     function getOrders(page){
+        $("#loader").fadeIn(333);
+         $.ajax({url: `http://127.0.0.1:8000/ajax/orders/{{ section }}?page=${page}&{{  params|raw }}`, success: function(result){
+             $("#orders").html(result);
+             $("#loader").fadeOut(333);
+         }});
+     }
+
+     getOrders(1);
+     </script>
 
 {% endblock %}
