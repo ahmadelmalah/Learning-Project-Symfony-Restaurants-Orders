@@ -28,9 +28,6 @@ class OrderController extends FOSRestController
     /**
      * @Route("/active", name="active")
      * @Route("/archive", name="archive")
-
-     * @Route("/api/orders/active", name="apiActiveOrders")
-     * @Route("/api/orders/archive", name="apiArchiveOrders")
      */
     public function showOrdersAction(Request $request)
     {
@@ -45,10 +42,9 @@ class OrderController extends FOSRestController
 
         //URL to Send
         $ajax_params = http_build_query($_GET);
-        $ajax_params = str_replace('%5B', '[', $ajax_params);
-        $ajax_params = str_replace('%5D', ']', $ajax_params);
-        $ajax_params = str_replace('amp;', '', $ajax_params);
-        //return new Response($ajax_params);
+        //$ajax_params = str_replace('%5B', '[', $ajax_params);
+        //$ajax_params = str_replace('%5D', ']', $ajax_params);
+        //$ajax_params = str_replace('amp;', '', $ajax_params);
 
         if($request->get('_route') =='active' || $request->get('_route') == 'archive'){
           return $this->render('default/content/active.html.twig', [
@@ -62,27 +58,31 @@ class OrderController extends FOSRestController
           ]);
         }
 
-        //API Logic Goes Here
-
-        $encoder = new JsonEncoder();
-        $normalizer = new GetSetMethodNormalizer();
-        $serializer = new Serializer(array($normalizer), array($encoder));
-
-        $normalizer->setIgnoredAttributes(array('state', 'user', 'restaurant'));
-        $normalizer->setCircularReferenceHandler(function ($object) {
-           return $object->getID();
-        });
-
-        $ser = $serializer->serialize($forders, 'json');
-
-        $view = $this->view($ser, 200);
-        $view->setFormat('json');
-        return $this->handleView($view);
+        // //API Logic Goes Here
+        //
+        // $encoder = new JsonEncoder();
+        // $normalizer = new GetSetMethodNormalizer();
+        // $serializer = new Serializer(array($normalizer), array($encoder));
+        //
+        // $normalizer->setIgnoredAttributes(array('state', 'user', 'restaurant'));
+        // $normalizer->setCircularReferenceHandler(function ($object) {
+        //    return $object->getID();
+        // });
+        //
+        // $ser = $serializer->serialize($forders, 'json');
+        //
+        // $view = $this->view($ser, 200);
+        // $view->setFormat('json');
+        // return $this->handleView($view);
     }
 
     /**
      * @Route("/ajax/orders/active", name="ajax-active")
      * @Route("/ajax/orders/archive", name="ajax-archive")
+
+     * @Route("/api/orders/active", name="apiActiveOrders")
+     * @Route("/api/orders/archive", name="apiArchiveOrders")
+
      */
     public function showOrdersAjaxAction(Request $request)
     {
