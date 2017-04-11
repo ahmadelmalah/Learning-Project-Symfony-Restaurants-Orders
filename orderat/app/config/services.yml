@@ -4,6 +4,10 @@ parameters:
     #parameter_name: value
 
 services:
+     cache:
+       class: Doctrine\Common\Cache\FilesystemCache
+       arguments: ['../var/cache']
+
      app.helper:
        class: AppBundle\Utils\Helper
        arguments: ['@doctrine.orm.entity_manager']

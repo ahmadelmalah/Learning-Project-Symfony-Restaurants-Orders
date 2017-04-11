@@ -20,7 +20,15 @@ class AdminController extends Controller
     public function indexAction(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $count_users = $this->get('app.AdminService')->getTotal('users');
+        //return new response( $this->get('cache')->fetch('count_users') );
+
+
+        if ($cache_count_users = $this->get('cache')->fetch('count_users')) {
+            $count_users = $cache_count_users;
+        } else {
+            $count_users = $this->get('app.AdminService')->getTotal('users');
+            $this->get('cache')->save('count_users', $count_users, 60*15);
+        }
         $count_restaurants = $this->get('app.AdminService')->getTotal('restaurants');
         $count_forders = $this->get('app.AdminService')->getTotal('forders');
         $count_items = $this->get('app.AdminService')->getTotal('items');
