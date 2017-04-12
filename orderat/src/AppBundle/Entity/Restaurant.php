@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Restaurant
@@ -25,13 +26,17 @@ class Restaurant
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Restaurant name must be at least 3 characters long",
+     * )
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="menuurl", type="string", length=255, nullable=true)
+     * @ORM\Column(name="menuurl", type="string", length=255, nullable=false)
      */
     private $menuurl;
 

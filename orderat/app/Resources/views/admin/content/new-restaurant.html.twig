@@ -24,7 +24,11 @@
       {{ form_start(form) }}
       <div>
            {{ form_label(form.name)  }}
+           {% if form_errors(form.name) %}
+           <div class="alert alert-danger">
            {{ form_errors(form.name) }}
+           </div>
+           {% endif %}
            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
        </div>
        <br />

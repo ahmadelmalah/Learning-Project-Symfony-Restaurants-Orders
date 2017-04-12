@@ -37,6 +37,12 @@ class Item
      *     type="integer",
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 99,
+     *      minMessage = "Quantity should be at least 1",
+     *      maxMessage = "Quantity should not be more than 99"
+     * )
      */
     private $quantity;
 
