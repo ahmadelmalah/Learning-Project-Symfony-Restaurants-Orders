@@ -82,7 +82,12 @@
   <!-- /.row -->
   <!-- Main row -->
   <div class="row">
-    <!-- Left col -->
+
+    {% if is_cached %}
+    <div class="alert alert-warning">
+      <strong>Warning!</strong> Data shown on this page are cached, which may not be accurate, you can get live accurate data by <a href="/admin/clear-cache">clearing cache</a>
+    </div>
+    {% endif %}
 
 
   </div>

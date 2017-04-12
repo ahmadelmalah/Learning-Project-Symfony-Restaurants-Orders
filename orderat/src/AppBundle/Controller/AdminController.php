@@ -20,11 +20,14 @@ class AdminController extends Controller
     public function indexAction(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $is_cached = false;
         if ($cache_count_users = $this->get('cache')->fetch('count_users')) {
             $count_users = $cache_count_users;
             $count_restaurants = $this->get('cache')->fetch('count_restaurants');
             $count_forders = $this->get('cache')->fetch('count_forders');
             $count_items = $this->get('cache')->fetch('count_items');
+
+            $is_cached = true;
         } else {
             $count_users = $this->get('app.AdminService')->getTotal('users');
             $count_restaurants = $this->get('app.AdminService')->getTotal('restaurants');
@@ -42,7 +45,8 @@ class AdminController extends Controller
           'count_restaurants' => $count_restaurants,
           'count_forders' => $count_forders,
           'count_items' => $count_items,
-          'admin_name' => $this->getUser()->getUsername()
+          'admin_name' => $this->getUser()->getUsername(),
+          'is_cached' => $is_cached
         ] );
     }
 
@@ -71,4 +75,14 @@ class AdminController extends Controller
               'admin_name' => $this->getUser()->getUsername()
           ]);
     }
+
+    /**
+     * @Route("/admin/clear-cache", name="admin-clear-cache")
+     */
+    public function ClearCacheAction(Request $request)
+    {
+        $this->get('cache')->deleteAll();
+        return $this->redirectToRoute('admin');
+    }
+
 }
