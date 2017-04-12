@@ -20,18 +20,22 @@ class AdminController extends Controller
     public function indexAction(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        //return new response( $this->get('cache')->fetch('count_users') );
-
-
         if ($cache_count_users = $this->get('cache')->fetch('count_users')) {
             $count_users = $cache_count_users;
+            $count_restaurants = $this->get('cache')->fetch('count_restaurants');
+            $count_forders = $this->get('cache')->fetch('count_forders');
+            $count_items = $this->get('cache')->fetch('count_items');
         } else {
             $count_users = $this->get('app.AdminService')->getTotal('users');
+            $count_restaurants = $this->get('app.AdminService')->getTotal('restaurants');
+            $count_forders = $this->get('app.AdminService')->getTotal('forders');
+            $count_items = $this->get('app.AdminService')->getTotal('items');
+
             $this->get('cache')->save('count_users', $count_users, 60*15);
+            $this->get('cache')->save('count_restaurants', $count_restaurants, 60*15);
+            $this->get('cache')->save('count_forders', $count_forders, 60*15);
+            $this->get('cache')->save('count_items', $count_items, 60*15);
         }
-        $count_restaurants = $this->get('app.AdminService')->getTotal('restaurants');
-        $count_forders = $this->get('app.AdminService')->getTotal('forders');
-        $count_items = $this->get('app.AdminService')->getTotal('items');
 
         return $this->render('admin/content/main.html.twig', [
           'count_users' => $count_users,
