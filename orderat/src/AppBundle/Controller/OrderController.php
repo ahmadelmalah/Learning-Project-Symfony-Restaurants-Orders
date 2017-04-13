@@ -42,7 +42,6 @@ class OrderController extends FOSRestController
 
         if($request->get('_route') =='active' || $request->get('_route') == 'archive'){
           return $this->render('default/content/active.html.twig', [
-              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
               'forders' => $forders,
               'form_filter' => $form->createView(),
               'section' => $request->get('_route'),
@@ -75,27 +74,14 @@ class OrderController extends FOSRestController
         //return new Response($request->get('_route'));
         if($request->get('_route') =='ajax-active' || $request->get('_route') == 'ajax-archive'){
           return $this->render('default/content/orders.ajax.html.twig', [
-              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
               'forders' => $forders,
               'form_filter' => $form->createView(),
           ]);
         }
 
         //API Logic Goes Here
-
-        $encoder = new JsonEncoder();
-        $normalizer = new GetSetMethodNormalizer();
-        $serializer = new Serializer(array($normalizer), array($encoder));
-
-        $normalizer->setIgnoredAttributes(array('state', 'user', 'restaurant'));
-        $normalizer->setCircularReferenceHandler(function ($object) {
-           return $object->getID();
-        });
-
-        $ser = $serializer->serialize($forders, 'json');
-
-        $view = $this->view($ser, 200);
-        $view->setFormat('json');
+        $serial = $this->get('api')->getSerial($forders, array('state', 'user', 'restaurant'));
+        $view = $this->view($serial, 200)->setFormat('json');
         return $this->handleView($view);
     }
 
@@ -113,7 +99,6 @@ class OrderController extends FOSRestController
         }
 
         return $this->render('default/content/new.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'form' => $form->createView(),
         ]);
     }
@@ -139,7 +124,6 @@ class OrderController extends FOSRestController
         }
 
         return $this->render('default/content/order/add.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'form' => $form->createView(),
             'href_backToOrder' => "/orders/{$forder->getID()}/show"
         ]);
@@ -152,7 +136,6 @@ class OrderController extends FOSRestController
     public function showAction(Request $request, $forder)
     {
         return $this->render('default/content/order/show.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
         ]);
     }
@@ -167,7 +150,6 @@ class OrderController extends FOSRestController
           $this->get('session')->getFlashBag()->add('OrderNotChanged', "Not enough items!");
         }
         return $this->render('default/content/order/show.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
         ]);
     }
@@ -180,7 +162,6 @@ class OrderController extends FOSRestController
     {
         $this->get('app.OrderService')->changeOrderState($forder, 3);
         return $this->render('default/content/order/show.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
         ]);
     }
@@ -194,7 +175,6 @@ class OrderController extends FOSRestController
         $price = $request->get('price');
         $this->get('app.OrderService')->changeOrderState($forder, 4, $price);
         return $this->render('default/content/order/show.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
         ]);
     }
@@ -207,7 +187,6 @@ class OrderController extends FOSRestController
     {
         $this->get('app.OrderService')->changeOrderState($forder, 5);
         return $this->render('default/content/order/show.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'forder' => $forder
         ]);
     }

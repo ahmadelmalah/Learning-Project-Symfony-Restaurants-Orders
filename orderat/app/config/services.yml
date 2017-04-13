@@ -27,3 +27,6 @@ services:
      app.AdminService:
        class: AppBundle\Services\AdminService
        arguments: ['@doctrine.orm.entity_manager', '@cache']
+
+     api:
+       class: AppBundle\Utils\ApiUtil
