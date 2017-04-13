@@ -16,7 +16,9 @@ class RestaurantService
         $this->em = $entityManager;
     }
 
-    public function create(){
-
+    public function create($restaurant){
+      $this->em->persist($restaurant);
+      $this->em->flush();
+      return true;
     }
 }

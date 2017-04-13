@@ -28,7 +28,7 @@ class AdminController extends Controller
           'count_restaurants' => $this->get('app.AdminService')->getTotal('restaurants'),
           'count_forders' => $this->get('app.AdminService')->getTotal('forders'),
           'count_items' => $this->get('app.AdminService')->getTotal('items'),
-          
+
           'admin_name' => $this->getUser()->getUsername()
         ] );
     }
@@ -39,21 +39,16 @@ class AdminController extends Controller
     public function newRestaurantAction(Request $request)
     {
           $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
           $restaurant = new Restaurant();
           $form = $this->createForm(RestaurantType::class, $restaurant);
           $form->handleRequest($request);
-
           if ($form->isSubmitted() && $form->isValid()) {
-
-                  $em = $this->getDoctrine()->getManager();
-                  $em->persist($restaurant);
-                  $em->flush();
-
-                  return $this->redirectToRoute('admin');
-              }
+            $this->get('app.RestaurantService')->create($restaurant);
+            return $this->redirectToRoute('admin');
+          }
 
           return $this->render('admin/content/new-restaurant.html.twig', [
-              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
               'form' => $form->createView(),
               'admin_name' => $this->getUser()->getUsername()
           ]);
