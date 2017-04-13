@@ -40,12 +40,6 @@ class OrderController extends FOSRestController
           $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
-        //URL to Send
-        $ajax_params = http_build_query($_GET);
-        //$ajax_params = str_replace('%5B', '[', $ajax_params);
-        //$ajax_params = str_replace('%5D', ']', $ajax_params);
-        //$ajax_params = str_replace('amp;', '', $ajax_params);
-
         if($request->get('_route') =='active' || $request->get('_route') == 'archive'){
           return $this->render('default/content/active.html.twig', [
               'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
@@ -53,27 +47,10 @@ class OrderController extends FOSRestController
               'form_filter' => $form->createView(),
               'section' => $request->get('_route'),
               //'page' => $request->query->getInt('page', 1),
-              'params' => $ajax_params
+              'params' => http_build_query($_GET)
 
           ]);
         }
-
-        // //API Logic Goes Here
-        //
-        // $encoder = new JsonEncoder();
-        // $normalizer = new GetSetMethodNormalizer();
-        // $serializer = new Serializer(array($normalizer), array($encoder));
-        //
-        // $normalizer->setIgnoredAttributes(array('state', 'user', 'restaurant'));
-        // $normalizer->setCircularReferenceHandler(function ($object) {
-        //    return $object->getID();
-        // });
-        //
-        // $ser = $serializer->serialize($forders, 'json');
-        //
-        // $view = $this->view($ser, 200);
-        // $view->setFormat('json');
-        // return $this->handleView($view);
     }
 
     /**
