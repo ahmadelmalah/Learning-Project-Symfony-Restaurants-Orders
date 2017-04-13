@@ -18,20 +18,13 @@ class DefaultController extends FOSRestController
      */
     public function indexAction(Request $request)
     {
-        if ($this->isGranted('ROLE_USER') == false) {
-          return $this->render('default/content/visitor/index.html.twig', [
-              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-          ]);
+        //Redirect to active if the visitor is user
+        if ($this->isGranted('ROLE_USER') == true) {
+          return new RedirectResponse($this->generateUrl('active'));
         }
 
-        return new RedirectResponse($this->generateUrl('active'));
-    }
-
-    /**
-     * @Route("/ajax/test", name="ajaxtest")
-     */
-    public function testAction(Request $request)
-    {
-        return new Response( 'testsdsr v0' );
+        return $this->render('default/content/visitor/index.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+        ]);
     }
 }
