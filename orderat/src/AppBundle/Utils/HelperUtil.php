@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Utils;
 
-class Helper
+class HelperUtil
 {
-  
+
 }
