@@ -9,7 +9,7 @@ class AdminService
     protected $cache;
 
     /**
-    * Helper constructor.
+    * Servvice constructor.
     * @param EntityManager $entityManager
     */
     public function __construct(EntityManager $entityManager, $cacheService)

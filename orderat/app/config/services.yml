@@ -20,6 +20,10 @@ services:
        class: AppBundle\Services\ItemService
        arguments: ['@doctrine.orm.entity_manager', "@=service('security.token_storage').getToken().getUser()"]
 
+     app.RestaurantService:
+       class: AppBundle\Services\RestaurantService
+       arguments: ['@doctrine.orm.entity_manager']
+
      app.AdminService:
        class: AppBundle\Services\AdminService
        arguments: ['@doctrine.orm.entity_manager', '@cache']
