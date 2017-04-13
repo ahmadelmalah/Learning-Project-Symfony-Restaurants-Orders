@@ -83,9 +83,9 @@
   <!-- Main row -->
   <div class="row">
 
-    {% if is_cached %}
+    {% if is_cached == true %}
     <div class="alert alert-warning">
-      <strong>Warning!</strong> Data shown on this page are cached, which may not be accurate, you can get live accurate data by <a href="/admin/clear-cache">clearing cache</a>
+      <strong>Warning!</strong> Data shown on this page are loaded from cache, which may not be accurate, you can get live accurate data by <a href="/admin/clear-cache">clearing cache</a>
     </div>
     {% endif %}
 
