@@ -6,7 +6,7 @@ use AppBundle\Entity\Restaurant;
 
 class RestaurantService
 {
-    protected $em;
+    protected $entityManager;
 
     /**
     * Service constructor.
@@ -14,7 +14,7 @@ class RestaurantService
     */
     public function __construct(EntityManager $entityManager)
     {
-        $this->em = $entityManager;
+        $this->entityManager = $entityManager;
     }
 
     public function create(Restaurant $restaurant){
@@ -23,7 +23,7 @@ class RestaurantService
     }
 
     private function save(Restaurant $restaurant){
-      $this->em->persist($restaurant);
-      $this->em->flush();
+      $this->entityManager->persist($restaurant);
+      $this->entityManager->flush();
     }
 }

@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityManager;
 
 class AdminService
 {
-    protected $em;
+    protected $entityManager;
     protected $cache;
 
     /**
@@ -14,7 +14,7 @@ class AdminService
     */
     public function __construct(EntityManager $entityManager, $cacheService)
     {
-        $this->em = $entityManager;
+        $this->entityManager = $entityManager;
         $this->cache = $cacheService;
     }
 
@@ -48,7 +48,7 @@ class AdminService
           break;
 
       }
-      return $this->em->getRepository($repoName)->getTotal();
+      return $this->entityManager->getRepository($repoName)->getTotal();
     }
 
     public function saveDataToCache($key, $value){

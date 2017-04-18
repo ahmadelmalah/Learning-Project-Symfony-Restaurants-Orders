@@ -10,7 +10,7 @@ define('ORDERS_PER_PAGE', 5);
 
 class OrderService
 {
-    protected $em;
+    protected $entityManager;
     protected $user;
     protected $knp_paginator;
         /**
@@ -20,7 +20,7 @@ class OrderService
     */
      public function __construct(EntityManager $entityManager, $iUser, $knp_paginator_service)
      {
-         $this->em = $entityManager;
+         $this->entityManager = $entityManager;
          $this->user = $iUser;
          $this->knp_paginator = $knp_paginator_service;
      }
@@ -30,11 +30,10 @@ class OrderService
      */
     public function create(Forder $forder)
     {
-        $em = $this->em;
         $user = $this->user;
 
         //Initial Values
-        $state = $em->getRepository('AppBundle:state')->find(State::ACTIVE);
+        $state = $this->entityManager->getRepository('AppBundle:state')->find(State::ACTIVE);
 
         $forder->setState($state);
         $forder->setUser($user);
@@ -44,7 +43,6 @@ class OrderService
     }
 
     public function changeOrderState($forder, $nextState, $price = null){
-      $em = $this->em;
       $user = $this->user;
 
       //Validation
@@ -57,7 +55,7 @@ class OrderService
           }
       }
 
-      $state = $em->getRepository('AppBundle:State')->find($nextState);
+      $state = $this->entityManager->getRepository('AppBundle:State')->find($nextState);
       $forder->setState($state);
 
       if($nextState == State::WAITING){ //if it changed to called
@@ -78,11 +76,9 @@ class OrderService
     * Here we use state as a filter
     */
     public function getOrders($section, $start = 1, $urlFilter = null){
-        $em = $this->em;
-
         $queryFilter = $this->getQueryFilterFromUrlFilter($section, $urlFilter, $this->user->getID());
 
-        $forders = $em->getRepository('AppBundle:Forder')->findBy($queryFilter, array('id' => 'DESC'));
+        $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy($queryFilter, array('id' => 'DESC'));
         //Pagination Process
         $pagination = $this->knp_paginator->paginate(
             $forders,
@@ -125,7 +121,7 @@ class OrderService
     }
 
     private function save(Forder $forder){
-      $this->em->persist($forder);
-      $this->em->flush();
+      $this->entityManager->persist($forder);
+      $this->entityManager->flush();
     }
 }

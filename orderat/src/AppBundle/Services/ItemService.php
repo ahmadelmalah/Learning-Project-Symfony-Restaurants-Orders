@@ -9,7 +9,7 @@ use AppBundle\Entity\Forder;
 
 class ItemService
 {
-    protected $em;
+    protected $entityManager;
     protected $user;
 
     /**
@@ -19,7 +19,7 @@ class ItemService
     */
      public function __construct(EntityManager $entityManager, $iUser)
      {
-         $this->em = $entityManager;
+         $this->entityManager = $entityManager;
          $this->user = $iUser;
      }
 
@@ -28,7 +28,6 @@ class ItemService
     */
     public function create(Item $item, Forder $forder)
     {
-      $em = $this->em;
       $user = $this->user;
 
       if ($forder->getState()->getID() == State::ACTIVE){
@@ -43,7 +42,7 @@ class ItemService
     }
 
     private function save(Item $item){
-        $this->em->persist($item);
-        $this->em->flush();
+        $this->entityManager->persist($item);
+        $this->entityManager->flush();
     }
 }
