@@ -5,9 +5,20 @@ use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\State;
 use AppBundle\Entity\Forder;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use AppBundle\Utils\QueryFilter;
 
 //Number of items per page
 define('ORDERS_PER_PAGE', 5);
+
+define('CURRENT_ORDERS_STATES_ARRAY', [
+    State::ACTIVE,
+    State::READY,
+    State::WAITING
+]);
+define('HISTORY_ORDERS_STATES_ARRAY', [
+    State::DELIVERED,
+    State::COMPLETE
+]);
 
 class OrderService
 {
@@ -86,7 +97,7 @@ class OrderService
         $this->getQueryFilterArray($section, $urlFilter, $this->user->getID()),
         $this->getQuerySortArray()
       );
-      
+
       return $forders;
     }
 
@@ -103,34 +114,19 @@ class OrderService
     }
 
     static function getQueryFilterArray($section, $urlFilter = null, $userID = null){
-        $queryFilterArray = array();
+        $queryFilter = new QueryFilter;
 
-        //Section Filtration
         if($section == 'active' || $section == 'ajax-active' || $section == 'apiActiveOrders'){
-          $queryFilter['state'] = array(
-            State::ACTIVE,
-            State::READY,
-            State::WAITING
-          );
+          $queryFilter->addFilter('state', CURRENT_ORDERS_STATES_ARRAY);
         }elseif($section == 'archive' || $section == 'ajax-archive' || $section == 'apiArchiveOrders'){
-          $queryFilter['state'] = array(
-            State::DELIVERED,
-            State::COMPLETE
-          );
+            $queryFilter->addFilter('state', HISTORY_ORDERS_STATES_ARRAY);
         }
 
-        //Additional Filtrations from URL
-        if(isset($urlFilter['restaurant']) && $urlFilter['restaurant']){
-          $queryFilter['restaurant'] = $urlFilter['restaurant'];
-        }
-        if(isset($urlFilter['state']) && $urlFilter['state']){
-          $queryFilter['state'] = $urlFilter['state'];
-        }
-        if(isset($urlFilter['myorders']) && $urlFilter['myorders'] == 1){
-          $queryFilter['user'] = $userID;
-        }
+        $queryFilter->addFilter('restaurant', $urlFilter['restaurant']);
+        $queryFilter->addFilter('state', $urlFilter['state']);
+        $queryFilter->addFilter('user', $userID, (isset($urlFilter['myorders']) && intval($urlFilter['myorders']) === 1));
 
-        return $queryFilter;
+        return $queryFilter->getArray();
     }
 
     private function getQuerySortArray(){
