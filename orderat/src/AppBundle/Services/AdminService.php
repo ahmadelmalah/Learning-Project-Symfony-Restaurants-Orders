@@ -52,7 +52,7 @@ class AdminService
     }
 
     public function saveDataToCache($key, $value){
-      $this->cache->save($key, $value);
+      $this->cache->save($key, $value, 60*15);
       $this->checkAdminCache();
     }
 
@@ -62,7 +62,7 @@ class AdminService
       if ($this->cache->fetch('count_forders') == false) return;
       if ($this->cache->fetch('count_items') == false) return;
 
-      $this->cache->save('cache_admin', 1);
+      $this->cache->save('cache_admin', 1, 60*15);
     }
 
     public function isCached(){

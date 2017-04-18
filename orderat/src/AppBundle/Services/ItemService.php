@@ -3,6 +3,8 @@ namespace AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\State;
+use AppBundle\Entity\Item;
+use AppBundle\Entity\Forder;
 
 
 class ItemService
@@ -24,7 +26,7 @@ class ItemService
     /*
     * Inserts items inside an order
     */
-    public function create($item, $forder)
+    public function create(Item $item, Forder $forder)
     {
       $em = $this->em;
       $user = $this->user;
@@ -33,11 +35,15 @@ class ItemService
         $item->setForder($forder);
         $item->setUser($user);
 
-        $em->persist($item);
-        $em->flush();
+        $this->save($item);
         return true;
       }else{
         return false;
       }
+    }
+
+    private function save(Item $item){
+        $this->em->persist($item);
+        $this->em->flush();
     }
 }

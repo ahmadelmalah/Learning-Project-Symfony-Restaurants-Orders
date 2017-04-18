@@ -3,6 +3,7 @@ namespace AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\State;
+use AppBundle\Entity\Forder;
 
 //Number of items per page
 define('ORDERS_PER_PAGE', 5);
@@ -27,7 +28,7 @@ class OrderService
      /*
      * Creates an order
      */
-    public function create($forder)
+    public function create(Forder $forder)
     {
         $em = $this->em;
         $user = $this->user;
@@ -39,8 +40,7 @@ class OrderService
         $forder->setUser($user);
         $forder->setCreatedAt(new \DateTime("now"));
 
-        $em->persist($forder);
-        $em->flush();
+        $this->save($forder);
     }
 
     public function changeOrderState($forder, $nextState, $price = null){
@@ -69,8 +69,7 @@ class OrderService
           $forder->setCompletedAt(new \DateTime("now"));
       }
 
-      $em->persist($forder);
-      $em->flush();
+      $this->save($forder);
       return true;
     }
 
@@ -125,7 +124,8 @@ class OrderService
         return $queryFilter;
     }
 
-    static function forTest(){
-      return 'hey';
+    private function save(Forder $forder){
+      $this->em->persist($forder);
+      $this->em->flush();
     }
 }
