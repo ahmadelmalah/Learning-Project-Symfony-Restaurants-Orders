@@ -49,7 +49,7 @@
      <script>
      function getOrders(page){
         $("#loader").fadeIn(333);
-         $.ajax({url: `http://127.0.0.1:8000/ajax/orders/{{ section }}?page=${page}&{{  params|raw }}`, success: function(result){
+         $.ajax({url: `/ajax/orders/{{ section }}?page=${page}&{{  params|raw }}`, success: function(result){
              $("#orders").html(result);
              $("#loader").fadeOut(333);
          }});
