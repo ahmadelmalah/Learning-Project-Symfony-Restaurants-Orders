@@ -2,16 +2,17 @@
 namespace AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use AppBundle\Entity\State;
+
+//Number of items per page
+define('ORDERS_PER_PAGE', 5);
 
 class OrderService
 {
     protected $em;
     protected $user;
     protected $knp_paginator;
-
-    const NUM_PAGES = 5;
-
-    /**
+        /**
     * Helper constructor.
     * @param EntityManager $entityManager
     * @param StateRepository $stateRepository
@@ -32,7 +33,7 @@ class OrderService
         $user = $this->user;
 
         //Initial Values
-        $state = $em->getRepository('AppBundle:state')->find(1); //active
+        $state = $em->getRepository('AppBundle:state')->find(State::ACTIVE);
 
         $forder->setState($state);
         $forder->setUser($user);
@@ -50,7 +51,7 @@ class OrderService
       if($user->getID() != $forder->getUser()->getID()){
         return;
       }
-      if($nextState == 2){ //if it changed to ready
+      if($nextState == State::READY){ //if it changed to ready
           if ( $forder->getItems()->count()  == 0 ){
             return false;
           }
@@ -59,9 +60,9 @@ class OrderService
       $state = $em->getRepository('AppBundle:State')->find($nextState);
       $forder->setState($state);
 
-      if($nextState == 3){ //if it changed to called
+      if($nextState == State::WAITING){ //if it changed to called
           $forder->setCalledAt(new \DateTime("now"));
-      }elseif($nextState == 4){ //if it changed to delivered
+      }elseif($nextState == State::DELIVERED){ //if it changed to delivered
           $forder->setDeliveredAt(new \DateTime("now"));
           $forder->setPrice($price);
       }elseif($nextState == 5){ //if it changed to completed
@@ -87,7 +88,7 @@ class OrderService
         $pagination = $this->knp_paginator->paginate(
             $forders,
             $start,
-             self::NUM_PAGES
+            ORDERS_PER_PAGE
         );
 
         return $pagination;
@@ -98,9 +99,16 @@ class OrderService
 
         //Section Filtration
         if($section == 'active' || $section == 'ajax-active' || $section == 'apiActiveOrders'){
-          $queryFilter['state'] = array(1, 2, 3);
+          $queryFilter['state'] = array(
+            State::ACTIVE,
+            State::READY,
+            State::WAITING
+          );
         }elseif($section == 'archive' || $section == 'ajax-archive' || $section == 'apiArchiveOrders'){
-          $queryFilter['state'] = array(4,5);
+          $queryFilter['state'] = array(
+            State::DELIVERED,
+            State::COMPLETE
+          );
         }
 
         //Additional Filtrations from URL

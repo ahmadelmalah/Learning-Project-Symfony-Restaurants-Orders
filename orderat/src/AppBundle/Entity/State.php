@@ -10,8 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="state")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\StateRepository")
  */
-class State
+ class State
 {
+    const ACTIVE    = 1;
+    const READY     = 2;
+    const WAITING   = 3;
+    const DELIVERED = 4;
+    const COMPLETE  = 5;
+
     /**
      * @var int
      *

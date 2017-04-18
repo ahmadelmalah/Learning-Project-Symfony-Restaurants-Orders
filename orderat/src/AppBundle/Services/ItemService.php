@@ -2,6 +2,8 @@
 namespace AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use AppBundle\Entity\State;
+
 
 class ItemService
 {
@@ -27,7 +29,7 @@ class ItemService
       $em = $this->em;
       $user = $this->user;
 
-      if ($forder->getState()->getID() == 1){
+      if ($forder->getState()->getID() == State::ACTIVE){
         $item->setForder($forder);
         $item->setUser($user);
 
