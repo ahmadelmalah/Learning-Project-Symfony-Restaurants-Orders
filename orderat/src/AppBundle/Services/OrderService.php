@@ -18,10 +18,10 @@ class OrderService
     * @param EntityManager $entityManager
     * @param StateRepository $stateRepository
     */
-     public function __construct(EntityManager $entityManager, $iUser, $knp_paginator_service)
+     public function __construct(EntityManager $entityManager, $user, $knp_paginator_service)
      {
          $this->entityManager = $entityManager;
-         $this->user = $iUser;
+         $this->user = $user;
          $this->knp_paginator = $knp_paginator_service;
      }
 
@@ -30,23 +30,19 @@ class OrderService
      */
     public function create(Forder $forder)
     {
-        $user = $this->user;
-
         //Initial Values
         $state = $this->entityManager->getRepository('AppBundle:state')->find(State::ACTIVE);
 
         $forder->setState($state);
-        $forder->setUser($user);
+        $forder->setUser($this->user);
         $forder->setCreatedAt(new \DateTime("now"));
 
         $this->save($forder);
     }
 
     public function changeOrderState($forder, $nextState, $price = null){
-      $user = $this->user;
-
       //Validation
-      if($user->getID() != $forder->getUser()->getID()){
+      if($this->user->getID() != $forder->getUser()->getID()){
         return;
       }
       if($nextState == State::READY){ //if it changed to ready
