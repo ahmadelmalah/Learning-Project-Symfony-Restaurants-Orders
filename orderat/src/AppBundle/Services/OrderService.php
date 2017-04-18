@@ -4,6 +4,7 @@ namespace AppBundle\Services;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\State;
 use AppBundle\Entity\Forder;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 //Number of items per page
 define('ORDERS_PER_PAGE', 5);
@@ -40,31 +41,40 @@ class OrderService
         $this->save($forder);
     }
 
-    public function changeOrderState($forder, $nextState, $price = null){
-      //Validation
+    public function makeReady(Forder $forder){
+        $this->changeOrderState($forder, State::READY);
+    }
+
+    public function makeWaiting(Forder $forder){
+        $forder->setCalledAt(new \DateTime("now"));
+        $this->changeOrderState($forder, State::WAITING);
+    }
+
+    public function makeDelivered(Forder $forder, $price){
+        $forder->setDeliveredAt(new \DateTime("now"));
+        $forder->setPrice($price);
+        $this->changeOrderState($forder, State::DELIVERED);
+    }
+
+    public function makeComplete(Forder $forder){
+        $forder->setCompletedAt(new \DateTime("now"));
+        $this->changeOrderState($forder, State::COMPLETE);
+    }
+
+    public function changeOrderState(Forder $forder, $StateID){
+      //Validation: User should be the creator of the restaurant
       if($this->user->getID() != $forder->getUser()->getID()){
-        return;
+        throw new Exception("You're not allowed to update this order!");
       }
-      if($nextState == State::READY){ //if it changed to ready
-          if ( $forder->getItems()->count()  == 0 ){
-            return false;
-          }
+      //Validation: Order couldn't be empty of items
+      if ($forder->getItems()->count()  == 0){
+        throw new Exception("No enough items!");
       }
 
-      $state = $this->entityManager->getRepository('AppBundle:State')->find($nextState);
+      $state = $this->entityManager->getRepository('AppBundle:State')->find($StateID);
       $forder->setState($state);
 
-      if($nextState == State::WAITING){ //if it changed to called
-          $forder->setCalledAt(new \DateTime("now"));
-      }elseif($nextState == State::DELIVERED){ //if it changed to delivered
-          $forder->setDeliveredAt(new \DateTime("now"));
-          $forder->setPrice($price);
-      }elseif($nextState == 5){ //if it changed to completed
-          $forder->setCompletedAt(new \DateTime("now"));
-      }
-
       $this->save($forder);
-      return true;
     }
 
     /*

@@ -148,11 +148,14 @@ class OrderController extends FOSRestController
      * @Route("/orders/{id}/ready", name="readyOrder")
      * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function readyAction(Request $request, $forder)
+    public function readyAction(Request $request, Forder $forder)
     {
-        if ($this->get('app.OrderService')->changeOrderState($forder, 2) == false){
-          $this->get('session')->getFlashBag()->add('OrderNotChanged', "Not enough items!");
+        try{
+          $this->get('app.OrderService')->makeReady($forder);
+        }catch(Exception $e){
+          $this->get('session')->getFlashBag()->add('OrderNotChanged', $e->getMessage());
         }
+
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
         ]);
@@ -162,9 +165,9 @@ class OrderController extends FOSRestController
      * @Route("/orders/{id}/call", name="callOrder")
      * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function callAction(Request $request, $forder)
+    public function callAction(Request $request, Forder $forder)
     {
-        $this->get('app.OrderService')->changeOrderState($forder, 3);
+        $this->get('app.OrderService')->makeWaiting($forder);
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
         ]);
@@ -174,10 +177,10 @@ class OrderController extends FOSRestController
      * @Route("/orders/{id}/deliver", name="deliverOrder")
      * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function deliverAction(Request $request, $forder)
+    public function deliverAction(Request $request, Forder $forder)
     {
         $price = $request->get('price');
-        $this->get('app.OrderService')->changeOrderState($forder, 4, $price);
+        $this->get('app.OrderService')->makeDelivered($forder, $price);
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
         ]);
@@ -187,9 +190,9 @@ class OrderController extends FOSRestController
      * @Route("/orders/{id}/complete", name="completeOrder")
      * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function completeAction(Request $request, $forder)
+    public function completeAction(Request $request, Forder $forder)
     {
-        $this->get('app.OrderService')->changeOrderState($forder, 5);
+        $this->get('app.OrderService')->makeComplete($forder);
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
         ]);
