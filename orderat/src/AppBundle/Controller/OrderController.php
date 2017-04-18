@@ -37,7 +37,7 @@ class OrderController extends FOSRestController
         $form = $this->createForm(FilterType::class, array('n' => 'name'));
         $form->handleRequest($request);
 
-        $forders = $this->get('app.OrderService')->getOrders(
+        $forders = $this->get('app.OrderService')->getOrdersPaginated(
           $request->get('_route'), //$section parm: current route
           $request->query->getInt('page', 1), //$Page parm
           $request->query->get('filter') //$filter parm: an array collects all filter daa
@@ -68,7 +68,7 @@ class OrderController extends FOSRestController
         $form = $this->createForm(FilterType::class, array('n' => 'name'));
         $form->handleRequest($request);
 
-        $forders = $this->get('app.OrderService')->getOrders(
+        $forders = $this->get('app.OrderService')->getOrdersPaginated(
           $request->get('_route'), //$section parm: current route
           $request->query->getInt('page', 1), //$Page parm
           $request->query->get('filter') //$filter parm: an array collects all filter daa

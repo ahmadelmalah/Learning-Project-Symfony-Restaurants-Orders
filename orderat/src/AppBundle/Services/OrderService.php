@@ -82,21 +82,28 @@ class OrderService
     * Here we use state as a filter
     */
     public function getOrders($section, $start = 1, $urlFilter = null){
-        $queryFilter = $this->getQueryFilterFromUrlFilter($section, $urlFilter, $this->user->getID());
-
-        $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy($queryFilter, array('id' => 'DESC'));
-        //Pagination Process
-        $pagination = $this->knp_paginator->paginate(
-            $forders,
-            $start,
-            ORDERS_PER_PAGE
-        );
-
-        return $pagination;
+      $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy(
+        $this->getQueryFilterArray($section, $urlFilter, $this->user->getID()),
+        $this->getQuerySortArray()
+      );
+      
+      return $forders;
     }
 
-    static function getQueryFilterFromUrlFilter($section, $urlFilter = null, $userID = null){
-        $queryFilter = array();
+    public function getOrdersPaginated($section, $start = 1, $urlFilter = null){
+      $forders = $this->getOrders($section, $start, $urlFilter);
+
+      $fordersPaginated =  $this->knp_paginator->paginate(
+          $forders,
+          $start,
+          ORDERS_PER_PAGE
+      );
+
+      return $fordersPaginated;
+    }
+
+    static function getQueryFilterArray($section, $urlFilter = null, $userID = null){
+        $queryFilterArray = array();
 
         //Section Filtration
         if($section == 'active' || $section == 'ajax-active' || $section == 'apiActiveOrders'){
@@ -124,6 +131,10 @@ class OrderService
         }
 
         return $queryFilter;
+    }
+
+    private function getQuerySortArray(){
+        return array('id' => 'DESC');
     }
 
     private function save(Forder $forder){
