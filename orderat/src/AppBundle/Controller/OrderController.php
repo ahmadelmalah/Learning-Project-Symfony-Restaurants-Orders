@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
+
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
@@ -113,10 +116,11 @@ class OrderController extends FOSRestController
        $form = $this->createForm(ItemType::class, $item);
        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($this->get('app.ItemService')->create($item, $forder) ){
-                $this->get('session')->getFlashBag()->add('ItemAdded', "Your Item {$item->getName()} was added successfuly");
-            }else{
-              $this->get('session')->getFlashBag()->add('ItemNotAdded', "Your Item {$item->getName()} was not add, This order doesn't recieve more items!");
+            try{
+              $this->get('app.ItemService')->create($item, $forder);
+              $this->get('session')->getFlashBag()->add('ItemAdded', "Your Item {$item->getName()} was added successfuly");
+            }catch(Exception $e){
+              $this->get('session')->getFlashBag()->add('ItemNotAdded', $e->getMessage());
             }
 
 

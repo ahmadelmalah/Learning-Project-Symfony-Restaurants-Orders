@@ -19,7 +19,6 @@ class RestaurantService
 
     public function create(Restaurant $restaurant){
       $this->save($restaurant);
-      return true;
     }
 
     private function save(Restaurant $restaurant){

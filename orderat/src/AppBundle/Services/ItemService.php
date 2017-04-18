@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\State;
 use AppBundle\Entity\Item;
 use AppBundle\Entity\Forder;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 
 class ItemService
@@ -28,17 +29,14 @@ class ItemService
     */
     public function create(Item $item, Forder $forder)
     {
-      $user = $this->user;
+        if ($forder->getState()->getID() != State::ACTIVE){
+            throw new Exception("Your Item {$item->getName()} was not add, This order doesn't recieve more items!!");
+        }
 
-      if ($forder->getState()->getID() == State::ACTIVE){
         $item->setForder($forder);
-        $item->setUser($user);
+        $item->setUser($this->user);
 
         $this->save($item);
-        return true;
-      }else{
-        return false;
-      }
     }
 
     private function save(Item $item){
