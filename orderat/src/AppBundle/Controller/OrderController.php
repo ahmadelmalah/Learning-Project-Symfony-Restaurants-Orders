@@ -34,7 +34,7 @@ class OrderController extends FOSRestController
      */
     public function showOrdersAction(Request $request)
     {
-        $form = $this->createForm(FilterType::class, array('n' => 'name'));
+        $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
 
         $forders = $this->get('app.OrderService')->getOrdersPaginated(
@@ -65,7 +65,7 @@ class OrderController extends FOSRestController
      */
     public function showOrdersAjaxAction(Request $request)
     {
-        $form = $this->createForm(FilterType::class, array('n' => 'name'));
+        $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
 
         $forders = $this->get('app.OrderService')->getOrdersPaginated(

@@ -10,10 +10,21 @@ use AppBundle\Utils\QueryFilter;
 //Number of items per page
 define('ORDERS_PER_PAGE', 5);
 
+define('CURRENT_ORDERS_ROUTES_ARRAY', [
+    'active',
+    'ajax-active',
+    'apiActiveOrders'
+]);
 define('CURRENT_ORDERS_STATES_ARRAY', [
     State::ACTIVE,
     State::READY,
     State::WAITING
+]);
+
+define('HISTORY_ORDERS_ROUTES_ARRAY', [
+    'archive',
+    'ajax-archive',
+    'apiArchiveOrders'
 ]);
 define('HISTORY_ORDERS_STATES_ARRAY', [
     State::DELIVERED,
@@ -116,15 +127,16 @@ class OrderService
     static function getQueryFilterArray($section, $urlFilter = null, $userID = null){
         $queryFilter = new QueryFilter;
 
-        if($section == 'active' || $section == 'ajax-active' || $section == 'apiActiveOrders'){
+        if( in_array($section, CURRENT_ORDERS_ROUTES_ARRAY) ){
           $queryFilter->addFilter('state', CURRENT_ORDERS_STATES_ARRAY);
-        }elseif($section == 'archive' || $section == 'ajax-archive' || $section == 'apiArchiveOrders'){
+        }elseif( in_array($section, HISTORY_ORDERS_ROUTES_ARRAY) ){
             $queryFilter->addFilter('state', HISTORY_ORDERS_STATES_ARRAY);
         }
-
+        if(isset($urlFilter['myorders']) && intval($urlFilter['myorders']) === 1){
+            $queryFilter->addFilter('user', $userID);
+        }
         $queryFilter->addFilter('restaurant', $urlFilter['restaurant']);
         $queryFilter->addFilter('state', $urlFilter['state']);
-        $queryFilter->addFilter('user', $userID, (isset($urlFilter['myorders']) && intval($urlFilter['myorders']) === 1));
 
         return $queryFilter->getArray();
     }
