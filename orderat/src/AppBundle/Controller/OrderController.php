@@ -1,30 +1,18 @@
 <?php
 
 namespace AppBundle\Controller;
-
+//Framework
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
-
 use Symfony\Component\Config\Definition\Exception\Exception;
-
-
+use Symfony\Component\HttpFoundation\{Request, Response, Session\Session};
+//External Bundles
 use FOS\RestBundle\Controller\FOSRestController;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Serializer;
-
-use AppBundle\Entity\Restaurant;
-use AppBundle\Entity\Forder;
-use AppBundle\Entity\Item;
-
-use AppBundle\Form\RestaurantType;
-use AppBundle\Form\ForderType;
-use AppBundle\Form\ItemType;
-use AppBundle\Form\FilterType;
+//Entities
+use AppBundle\Entity\{Restaurant, Forder, Item};
+//Forms
+use AppBundle\Form\{RestaurantType, ForderType, ItemType, FilterType};
 
 class OrderController extends FOSRestController
 {

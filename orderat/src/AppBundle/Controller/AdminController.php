@@ -1,15 +1,14 @@
 <?php
 
 namespace AppBundle\Controller;
-
+//Framework
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-
-use AppBundle\Entity\Restaurant;
-
-use AppBundle\Form\RestaurantType;
+use Symfony\Component\HttpFoundation\{Request, Response};
+//Entities
+use AppBundle\Entity\{Restaurant};
+//Forms
+use AppBundle\Form\{RestaurantType};
 
 
 class AdminController extends Controller
