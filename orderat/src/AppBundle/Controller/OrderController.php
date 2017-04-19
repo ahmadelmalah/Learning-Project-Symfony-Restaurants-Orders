@@ -71,8 +71,7 @@ class OrderController extends FOSRestController
         }
 
         //API Logic Goes Here
-        $serial = $this->get('api')->getSerial($forders, array('state', 'user', 'restaurant'));
-        $view = $this->view($serial, 200)->setFormat('json');
+        $view = $this->get('api')->getView($forders, array('state', 'user', 'restaurant'));
         return $this->handleView($view);
     }
 
