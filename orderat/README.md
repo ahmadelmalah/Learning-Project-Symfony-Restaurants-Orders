@@ -57,6 +57,15 @@ Application Services Description
 **Order Service** provides services regarding orders
 * *create()* creates a new order object and saves it to database
 
+* *makeReady()* creates a new order object and saves it to database
+* *makeWaiting()* creates a new order object and saves it to database
+* *makeDelivered()* creates a new order object and saves it to database
+* *makeComplete()* creates a new order object and saves it to database
+
+* *getOrders()* creates a new order object and saves it to database
+* *getOrdersPaginated()* creates a new order object and saves it to database
+
+
 **Item Service** provides services regarding order items
 * *create()* creates a new item object saves it to database
 
