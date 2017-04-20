@@ -32,6 +32,10 @@ $ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 ```
 * Enjoy and make food orders :)
 
+Project Architecture
+====================
+
+
 Releases Change log
 ===================
 What’s new in version beta 0.2 (Let's make something shippable)
