@@ -43,7 +43,7 @@ Layered 3-tier architecture is used on the project, MVC nature of symfony framew
 Architecture Implementation
 ---------------------------
 
-![alt tag](https://raw.githubusercontent.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders/dev/orderat/web/documentation/architecture-practical.png)
+![alt tag](https://raw.githubusercontent.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders/dev/orderat/web/documentation/architecture-practial.png)
 
 
 Releases Change log
