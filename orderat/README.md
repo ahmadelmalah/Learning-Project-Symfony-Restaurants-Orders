@@ -36,6 +36,14 @@ Releases Change log
 ===================
 What’s new in version beta 0.2 (Shippability)
 -------------------------------------
+* Remember me feature
+* Remember me admin protection (please re-login to access admin area)
+* Unit Test
+* Functional Test
+* Project report
+* UX optimizations: redirections, navigations and validations
+* UI optimizations: admin area
+* Exception Page
 
 What’s new in version beta 0.3 (More attention to quality and performance)
 -------------------------------------
