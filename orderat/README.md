@@ -47,27 +47,27 @@ What’s new in version beta 0.2 (Let's make something shippable)
 
 What’s new in version beta 0.3 (More attention to quality and performance)
 --------------------------------------------------------------------------
-New Features
+**New Features**
 * Applying AJAX on pagination
 * Adding Javascript loader on Pagination
 
-PHP7 New Features Used
+**PHP7 New Features Used**
 * Constant arrays
 * Group use declarations
 * Object type hinting
 
-Bug Fixes
+**Bug Fixes**
 * Fixing "$this" filtration bug
 
-Work Flow Optimizations
+**Work Flow Optimizations**
 * Git repository is now branched to distinguish development flow from deployment flow
 * Git repository README.md is updated to include documentations regarding installation and change log
 
-Performance Optimizations
+**Performance Optimizations**
 * Admin counts are now cachable according to caching strategy
 * Doctrine cache is used to handle counts values
 
-Code Base Optimizations
+**Code Base Optimizations**
 
 
 Symfony Standard Edition
