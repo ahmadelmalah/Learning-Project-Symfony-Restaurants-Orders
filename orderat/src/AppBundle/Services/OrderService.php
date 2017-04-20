@@ -51,6 +51,12 @@ class OrderService
     }
 
     public function makeDelivered(Forder $forder, $price){
+        if(is_numeric($price) == false){
+            throw new Exception("Price should be a number");
+        }
+        if($price < 0 || $price > 100000){
+            throw new Exception("Please enter a number between 0 and 100,000");
+        }
         $forder->setDeliveredAt(new \DateTime("now"));
         $forder->setPrice($price);
         $this->changeOrderState($forder, State::DELIVERED);
