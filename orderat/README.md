@@ -49,8 +49,8 @@ Architecture Implementation
 
 ![alt tag](https://raw.githubusercontent.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders/dev/orderat/web/documentation/architecture-practial.png)
 
-Application Services
---------------------
+Application Internal Services Description
+-----------------------------------------
 **Restaurant Service** provides services regarding restaurants
 * *create()* creates a new resturant object and saves it to database
 
