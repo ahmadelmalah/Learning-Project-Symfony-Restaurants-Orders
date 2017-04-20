@@ -51,15 +51,16 @@ Architecture Implementation
 
 Application Services
 --------------------
-**Item Service**
+**Restaurant Service** provides services regarding restaurants
+* *create()* creates a new resturant object and saves it to database
 
-**Restaurant Service**
+**Order Service** provides services regarding orders
+* *create()* creates a new order object and saves it to database
 
-**Order Service** provies
-* Applying AJAX on pagination
+**Item Service** provides services regarding order items
+* *create()* creates a new item object saves it to database
 
-
-**Admin Service**
+**Admin Service** provides services related to admin area
 
 Releases Change log
 ===================
