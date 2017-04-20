@@ -32,8 +32,13 @@ $ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 ```
 * Enjoy and make food orders :)
 
-Project Architecture
-====================
+Project Software Architecture
+=============================
+Architecture Pattern
+--------------------
+Layered 3-tier architecture is used on the project, MVC nature of symfony framework is used to accomplish this approach
+
+
 
 
 Releases Change log
