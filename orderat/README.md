@@ -68,6 +68,7 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 * Doctrine cache is used to handle counts values
 
 **Code Base Optimizations**
+
 *Readability Optimization*
 
 * Plain numbers are now replaced with descriptive-named constants(entity-related and service-related)
