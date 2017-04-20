@@ -1,3 +1,14 @@
+Food Orders Application
+=======================
+
+Welcome to Food Order Application, your best choice to make your organization and employees happy!
+
+
+Installation Guide
+------------------
+* Clone the repository
+
+
 Symfony Standard Edition
 ========================
 
