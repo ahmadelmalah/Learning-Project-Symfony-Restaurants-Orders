@@ -38,7 +38,7 @@ Architecture Pattern
 --------------------
 Layered 3-tier architecture is used on the project, MVC nature of symfony framework is used to accomplish this approach
 
-
+![alt tag](https://raw.githubusercontent.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders/dev/orderat/web/documentation/architecture-theo.png)
 
 
 Releases Change log
