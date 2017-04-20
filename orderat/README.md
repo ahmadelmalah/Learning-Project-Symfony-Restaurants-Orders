@@ -68,6 +68,9 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 * Doctrine cache is used to handle counts values
 
 **Code Base Optimizations**
+* New utility "Query Filter" is added to ease filtration
+* APIUtility is updated to return views
+* Plain numbers are now replaced with constants(entity-related and service-related)
 
 
 Symfony Standard Edition
