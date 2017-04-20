@@ -14,9 +14,25 @@ Prerequisites
 Installation Guide
 ------------------
 * Clone the repository
+
 ``` bash
-$ git clone https://github.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders.git
+  $ git clone https://github.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders.git
 ```
+* Generate the SSH keys :
+Inside the project folder run the following
+
+``` bash
+$ mkdir var/jwt
+$ openssl genrsa -out var/jwt/private.pem -aes256 4096
+$ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
+```
+* Install Dependencies
+Inside the project folder run the following
+
+``` bash
+  $ composer install
+```
+
 Symfony Standard Edition
 ========================
 
