@@ -68,7 +68,8 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 * Doctrine cache is used to handle counts values
 
 **Code Base Optimizations**
-* Plain numbers are now replaced with descriptive-names constants(entity-related and service-related)
+*a*
+* Plain numbers are now replaced with descriptive-named constants(entity-related and service-related)
 * All naming conventions were revisited
 * All functions were revisited, now maximum service function is 10-line long
 * New utility "Query Filter" is added to ease filtration
