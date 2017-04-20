@@ -36,13 +36,14 @@ Project Software Architecture
 =============================
 Layered Architecture Pattern
 -----------------------------
-Layered 3-tier architecture is used on the project, MVC nature of symfony framework is used to accomplish this approach
+Layered 3-tier architecture is used on the project, MVC nature of symfony framework is leveraged to accomplish this approach
 
 ![alt tag](https://raw.githubusercontent.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders/dev/orderat/web/documentation/architecture-theo.png)
 
-Test
+Architecture Implementation
+---------------------------
 
-![alt tag](https://raw.githubusercontent.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders/dev/orderat/web/documentation/architecture-theo.png)
+![alt tag](https://raw.githubusercontent.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders/dev/orderat/web/documentation/architecture-practical.png)
 
 
 Releases Change log
