@@ -47,15 +47,16 @@ What’s new in version beta 0.2 (Let's make something shippable)
 
 What’s new in version beta 0.3 (More attention to quality and performance)
 --------------------------------------------------------------------------
-Work Flow Optimizations
-* Git repository is now branched to distinguish development flow from deployment flow
-
 New Features
 * Applying AJAX on pagination
 * Adding Javascript loader on Pagination
 
 Bug Fixes
 * Fixing "$this" filtration bug
+
+Work Flow Optimizations
+* Git repository is now branched to distinguish development flow from deployment flow
+* Git repository README.md is updated to include documentations regarding installation and change log
 
 Performance Optimizations
 * Admin counts are now cachable according to caching strategy
