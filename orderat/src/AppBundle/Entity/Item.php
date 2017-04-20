@@ -26,6 +26,13 @@ class Item
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Restaurant name must be at least 3 characters long",
+     *      max = 20,
+     *      maxMessage = "Restaurant name must be not more that 20 characters long",
+
+     * )
      */
     private $name;
 
