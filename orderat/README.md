@@ -57,19 +57,22 @@ Application Services Description
 **Order Service** provides services regarding orders
 * *create()* creates a new order object and saves it to database
 
-* *makeReady()* creates a new order object and saves it to database
-* *makeWaiting()* creates a new order object and saves it to database
-* *makeDelivered()* creates a new order object and saves it to database
-* *makeComplete()* creates a new order object and saves it to database
+* *makeReady()* makes order state ready
+* *makeWaiting()* makes order state waiting
+* *makeDelivered()* makes order state delivered
+* *makeComplete()* makes order state complete
 
-* *getOrders()* creates a new order object and saves it to database
-* *getOrdersPaginated()* creates a new order object and saves it to database
+* *getOrders()* get orders according to specific criteria
+* *getOrdersPaginated()* similar to *getOrders()* but returns paginated results
 
 
 **Item Service** provides services regarding order items
 * *create()* creates a new item object saves it to database
 
 **Admin Service** provides services related to admin area
+* *getTotal()* gets the total count of a certain entity
+* *isCached()* checks if data is cached
+
 
 Releases Change log
 ===================
