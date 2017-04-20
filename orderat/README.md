@@ -3,11 +3,18 @@ Food Orders Application
 
 Welcome to Food Order Application, your best choice to make your organization and employees happy!
 
+Getting started
+===============
+Prerequisites
+-------------
+* PHP >= 7.0
+* Composer Installed
+* Git Installed
 
 Installation Guide
 ------------------
 * Clone the repository
-
+    git clone https://github.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders.git
 
 Symfony Standard Edition
 ========================
