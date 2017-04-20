@@ -48,7 +48,10 @@ What’s new in version beta 0.2 (Let's make something shippable)
 What’s new in version beta 0.3 (More attention to quality and performance)
 --------------------------------------------------------------------------
 New Features
-* Remember me feature
+* Applying AJAX on pagination
+* Adding Javascript loader o Paginator
+Bug Fixes
+* Fixing "$this" filtration bug
 
 Symfony Standard Edition
 ========================
