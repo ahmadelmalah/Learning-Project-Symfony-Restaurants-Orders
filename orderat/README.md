@@ -14,8 +14,9 @@ Prerequisites
 Installation Guide
 ------------------
 * Clone the repository
-    git clone https://github.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders.git
-
+``` bash
+$ git clone https://github.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders.git
+```
 Symfony Standard Edition
 ========================
 
