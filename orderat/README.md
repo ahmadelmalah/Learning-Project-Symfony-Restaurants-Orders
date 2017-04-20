@@ -51,6 +51,11 @@ New Features
 * Applying AJAX on pagination
 * Adding Javascript loader on Pagination
 
+PHP7 New Features Used
+* Constant arrays
+* Group use declarations
+* Object type hinting
+
 Bug Fixes
 * Fixing "$this" filtration bug
 
@@ -61,6 +66,8 @@ Work Flow Optimizations
 Performance Optimizations
 * Admin counts are now cachable according to caching strategy
 * Doctrine cache is used to handle counts values
+
+Code Base Optimizations
 
 
 Symfony Standard Edition
