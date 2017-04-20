@@ -20,19 +20,17 @@ Installation Guide
 ```
 * Generate the SSH keys :
 
-Inside the project folder run the following
-
 ``` bash
 $ mkdir var/jwt
 $ openssl genrsa -out var/jwt/private.pem -aes256 4096
 $ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 ```
 * Install Dependencies
-Inside the project folder run the following
 
 ``` bash
   $ composer install
 ```
+* Enjoy and make food orders :)
 
 Symfony Standard Edition
 ========================
