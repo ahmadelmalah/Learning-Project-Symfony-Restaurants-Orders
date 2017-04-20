@@ -34,7 +34,7 @@ $ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 
 Releases Change log
 ===================
-What’s new in version beta 0.2 (Shippability)
+What’s new in version beta 0.2 (Let's make something shippable)
 -------------------------------------
 * Remember me feature
 * Remember me admin protection (please re-login to access admin area)
@@ -46,7 +46,9 @@ What’s new in version beta 0.2 (Shippability)
 * Exception Page
 
 What’s new in version beta 0.3 (More attention to quality and performance)
--------------------------------------
+--------------------------------------------------------------------------
+New Features
+* Remember me feature
 
 Symfony Standard Edition
 ========================
