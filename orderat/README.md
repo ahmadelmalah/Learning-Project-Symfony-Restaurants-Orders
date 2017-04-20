@@ -19,6 +19,7 @@ Installation Guide
   $ git clone https://github.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders.git
 ```
 * Generate the SSH keys :
+
 Inside the project folder run the following
 
 ``` bash
