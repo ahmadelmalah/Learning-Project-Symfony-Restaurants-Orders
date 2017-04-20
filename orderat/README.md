@@ -69,11 +69,19 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 
 **Code Base Optimizations**
 
-*Readability Optimization*
+*Readability Optimizations*
 
 * Plain numbers are now replaced with descriptive-named constants(entity-related and service-related)
 * All naming conventions were revisited
 * All functions were revisited, now maximum service function is 10-line long
+
+*Code Base Convention Optimizations*
+
+* Services functions are now throwing exceptions instead of returning error codes
+* Functions with the same names represent the same logic (e.g each entity-service has create() and save())
+
+*Utility Optimizations*
+
 * New utility "Query Filter" is added to ease filtration
 * APIUtility is updated to return views
 
