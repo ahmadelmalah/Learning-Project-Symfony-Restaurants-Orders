@@ -42,12 +42,24 @@ Layered 3-tier architecture is used on the project, MVC nature of symfony framew
 
 Architecture Implementation
 ---------------------------
+* Presentation Layer: Twig
+* Business Logic: Services
+* Data Access Layer: Doctrine
+* Database: MYSQL
 
 ![alt tag](https://raw.githubusercontent.com/ahmadelmalah/Learning-Project-Symfony-Restaurants-Orders/dev/orderat/web/documentation/architecture-practial.png)
 
 Application Services
 --------------------
+**Item Service**
 
+**Restaurant Service**
+
+**Order Service** provies
+* Applying AJAX on pagination
+
+
+**Admin Service**
 
 Releases Change log
 ===================
