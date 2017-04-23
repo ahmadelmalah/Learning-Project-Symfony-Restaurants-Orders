@@ -24,11 +24,9 @@
 {% if form_filter is defined %}
 
   {{ form_start(form_filter, {'attr': {'class': 'navbar-form navbar-left'}}) }}
-       {{ form_label(form_filter.restaurant, ' ')  }}
        {{ form_errors(form_filter.restaurant) }}
        {{ form_widget(form_filter.restaurant, {'attr': {'class': 'form-control'}}) }}
 
-       {{ form_label(form_filter.state, ' ')  }}
        {{ form_errors(form_filter.state) }}
        {{ form_widget(form_filter.state, {'attr': {'class': 'form-control'}}) }}
 

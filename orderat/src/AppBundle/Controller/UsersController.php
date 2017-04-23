@@ -18,6 +18,8 @@ class UsersController extends FOSRestController
    */
   public function testAction(Request $request)
   {
-      return new Response(State::ACTIVE);
+    //$request = $this->get('request');
+      $translated = $this->get('translator')->trans('Symfony is great');
+      return new Response($translated);
   }
 }
