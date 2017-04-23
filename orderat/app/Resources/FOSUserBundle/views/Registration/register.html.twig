@@ -1,7 +1,17 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
-{% block content_title %}Please sing up{% endblock %}
+{% block content_title %}
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+  You're logged in
+{% else %}
+  Please sing up
+{% endif %}
+{% endblock %}
 
 {% block fos_user_content %}
-{% include "@FOSUser/Registration/register_content.html.twig" %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+      {{ include('@FOSUser/exception/already-logged.html.twig') }}
+    {% else %}
+      {% include "@FOSUser/Registration/register_content.html.twig" %}
+    {% endif %}
 {% endblock fos_user_content %}
