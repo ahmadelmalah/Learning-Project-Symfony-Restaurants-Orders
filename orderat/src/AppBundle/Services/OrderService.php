@@ -116,11 +116,15 @@ class OrderService
         }elseif( in_array($section, HISTORY_ORDERS_ROUTES_ARRAY) ){
             $queryFilter->addFilter('state', HISTORY_ORDERS_STATES_ARRAY);
         }
-        if(isset($urlFilter['myorders']) && intval($urlFilter['myorders']) === 1){
-            $queryFilter->addFilter('user', $userID);
-        }
-        $queryFilter->addFilter('restaurant', $urlFilter['restaurant']);
-        $queryFilter->addFilter('state', $urlFilter['state']);
+
+        if(isset($urlFilter['myorders']) && intval($urlFilter['myorders']) === 1)
+          $queryFilter->addFilter('user', $userID);
+          
+        if(isset($urlFilter['restaurant']))
+          $queryFilter->addFilter('restaurant', $urlFilter['restaurant']);
+
+        if(isset($urlFilter['state']))
+          $queryFilter->addFilter('state', $urlFilter['state']);
 
         return $queryFilter->getArray();
     }
