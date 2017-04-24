@@ -1,11 +1,5 @@
-{% for forder in forders %}
-{% include 'default/content/order/component/order.html.twig' %}
-{% endfor %}
-
-<div class="row">
-  <div class="col-md-12 col-centered " style="text-align: center;">
-    <div class="navigation">
-      {{ knp_pagination_render(forders) }}
-    </div>
-  </div>
-</div>
+{
+  "count": "{{forders.getTotalItemCount}}",
+  "orders": "[{% for forder in forders %}{% include 'default/content/order/component/order.html.twig' %}{% if loop.last == false %},{% endif %}{% endfor %}]",
+  "paginator": "<div class=\"row\"><div class=\"col-md-12 col-centered \" style=\"text-align: center;\"><div class=\"navigation\">{{ knp_pagination_render(forders) }}</div></div></div>"
+}

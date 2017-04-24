@@ -1,6 +1,6 @@
 {% extends 'default/index.html.twig' %}
 
-{% block content_title %}Active Orders, Now! ({{ forders.getTotalItemCount }} Orders){% endblock %}
+{% block content_title %}Active Orders, Now! <span id="orders_count">({{ forders.getTotalItemCount }} Orders)</span>{% endblock %}
 
 {% block stylesheets %}
   {{ parent() }}
@@ -65,7 +65,28 @@
         urlAjax = `/ajax/orders/{{ section }}?page=${page}&` + getAjaxUrlFilter();
         //alert(urlAjax);
          $.ajax({url: urlAjax, success: function(result){
-             $("#orders").html(result);
+              var ajaxResult = JSON.parse(result);
+              alert(ajaxResult["paginator"]);
+             $("#orders_count").html('(' + ajaxResult["count"] + ' Orders)');
+             alert('dtry');
+             var orders = JSON.parse(ajaxResult["orders"]);
+             var allOrdersTemplate = '';
+             for (var key in orders) {
+                  var order = orders[key];
+                  var orderTemplate = `
+                  <div class="panel panel-success">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">${order["restaurant"]}</h3>
+                    </div>
+                    <div class="panel-body">
+                    what
+                    </div>
+                  </div>
+                  `;
+                  allOrdersTemplate += orderTemplate;
+              }
+             //alert(orders[0]["num"]);
+             $("#orders").html(allOrdersTemplate + ajaxResult["paginator"]);
              $("#loader").fadeOut(333);
          }});
      }
