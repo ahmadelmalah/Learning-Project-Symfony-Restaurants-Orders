@@ -63,6 +63,7 @@
      function getOrders(page){
         $("#loader").fadeIn(333);
         urlAjax = `/ajax/orders/{{ section }}?page=${page}&` + getAjaxUrlFilter();
+        //alert(urlAjax);
          $.ajax({url: urlAjax, success: function(result){
              $("#orders").html(result);
              $("#loader").fadeOut(333);
@@ -72,6 +73,12 @@
      getOrders(1);
       filter_save.addEventListener("click", function() {
         filterObject["restaurant"] = $("#filter_restaurant").val();
+        filterObject["state"] = $("#filter_state").val();
+        if( $("#filter_myorders").is(':checked') == true){
+          filterObject["myorders"] = 1;
+        }else{
+          filterObject["myorders"] = 0;
+        }
          getOrders(1);
        });
      </script>
