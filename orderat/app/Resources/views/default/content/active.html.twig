@@ -70,7 +70,10 @@
      }
 
      getOrders(1);
-      filter_save.addEventListener("click", function() { alert("alert");});
+      filter_save.addEventListener("click", function() {
+        filterObject["restaurant"] = $("#filter_restaurant").val();
+         getOrders(1);
+       });
      </script>
 
 {% endblock %}
