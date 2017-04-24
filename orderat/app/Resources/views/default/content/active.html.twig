@@ -47,9 +47,23 @@
     {{ parent() }}
      <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
      <script>
+     var filterObject = {};
+       {% for  key,value in params %}
+          filterObject["{{key}}"] = "{{value}}";
+       {% endfor %}
+
+      function getAjaxUrlFilter(){
+        var url = '';
+        for (var prop in filterObject) {
+          url += 'filter[' + prop + ']' + '=' + filterObject[prop] + '&';
+        }
+        return url;
+      }
+
      function getOrders(page){
         $("#loader").fadeIn(333);
-         $.ajax({url: `/ajax/orders/{{ section }}?page=${page}&{{  params|raw }}`, success: function(result){
+        urlAjax = `/ajax/orders/{{ section }}?page=${page}&` + getAjaxUrlFilter();
+         $.ajax({url: urlAjax, success: function(result){
              $("#orders").html(result);
              $("#loader").fadeOut(333);
          }});

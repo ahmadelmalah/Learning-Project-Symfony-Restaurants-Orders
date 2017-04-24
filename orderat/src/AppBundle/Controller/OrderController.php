@@ -31,13 +31,18 @@ class OrderController extends FOSRestController
           $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
+        $filterArray = array();
+        if( $request->get('filter') ){
+          $filterArray = $request->get('filter');
+        }
+        //return new Response($request->get('filter'));
         if($request->get('_route') =='active' || $request->get('_route') == 'archive'){
           return $this->render('default/content/active.html.twig', [
               'forders' => $forders,
               'form_filter' => $form->createView(),
               'section' => $request->get('_route'),
               //'page' => $request->query->getInt('page', 1),
-              'params' => http_build_query($_GET)
+              'params' => $filterArray//http_build_query($_GET)
 
           ]);
         }
@@ -194,7 +199,7 @@ class OrderController extends FOSRestController
         }catch(Exception $e){
           $this->get('session')->getFlashBag()->add('errors', $e->getMessage());
         }
-        
+
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
         ]);
