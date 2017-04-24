@@ -140,7 +140,7 @@ class OrderController extends FOSRestController
         try{
           $this->get('app.OrderService')->makeReady($forder);
         }catch(Exception $e){
-          $this->get('session')->getFlashBag()->add('OrderNotChanged', $e->getMessage());
+          $this->get('session')->getFlashBag()->add('errors', $e->getMessage());
         }
 
         return $this->render('default/content/order/show.html.twig', [
@@ -154,7 +154,12 @@ class OrderController extends FOSRestController
      */
     public function callAction(Request $request, Forder $forder)
     {
-        $this->get('app.OrderService')->makeWaiting($forder);
+        try{
+          $this->get('app.OrderService')->makeWaiting($forder);
+        }catch(Exception $e){
+          $this->get('session')->getFlashBag()->add('errors', $e->getMessage());
+        }
+
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
         ]);
@@ -166,8 +171,13 @@ class OrderController extends FOSRestController
      */
     public function deliverAction(Request $request, Forder $forder)
     {
-        $price = $request->get('price');
-        $this->get('app.OrderService')->makeDelivered($forder, $price);
+        try{
+          $price = $request->get('price');
+          $this->get('app.OrderService')->makeDelivered($forder, $price);
+        }catch(Exception $e){
+          $this->get('session')->getFlashBag()->add('errors', $e->getMessage());
+        }
+
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
         ]);
@@ -179,7 +189,12 @@ class OrderController extends FOSRestController
      */
     public function completeAction(Request $request, Forder $forder)
     {
-        $this->get('app.OrderService')->makeComplete($forder);
+        try{
+          $this->get('app.OrderService')->makeComplete($forder);
+        }catch(Exception $e){
+          $this->get('session')->getFlashBag()->add('errors', $e->getMessage());
+        }
+        
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
         ]);
