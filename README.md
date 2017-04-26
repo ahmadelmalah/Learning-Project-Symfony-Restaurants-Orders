@@ -42,7 +42,7 @@ Layered 3-tier architecture is used on the project, MVC nature of symfony framew
 
 Architecture Implementation
 ---------------------------
-* Presentation Layer: Twig
+* Presentation Layer: Twig (+ ES6 Template Literals)
 * Business Logic: Services
 * Data Access Layer: Doctrine
 * Database: MYSQL
@@ -99,6 +99,9 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 * Group use declarations
 * Object type hinting
 
+**Javascript ES6 New Features Used**
+* Template literals
+
 **Bug and Vulnerabilities Fixes**
 * Fixing "$this" filtration bug
 * Fixing Symfony log warnings(Strings Translation)
@@ -120,6 +123,7 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 * Plain numbers are now replaced with descriptive-named constants(entity-related and service-related)
 * All naming conventions were revisited
 * All functions were revisited, now maximum service function is 10-line long
+* Javascript functions are grouped in separate .js files with suitable names
 
 *Code Base Convention Optimizations*
 
