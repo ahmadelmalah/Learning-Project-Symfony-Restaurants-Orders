@@ -26,6 +26,7 @@ class Restaurant
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 3,
      *      minMessage = "Restaurant name must be at least 3 characters long",
