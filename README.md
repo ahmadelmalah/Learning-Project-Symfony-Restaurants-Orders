@@ -91,6 +91,7 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 --------------------------------------------------------------------------
 **New Features**
 * Applying AJAX on pagination
+* Applying AJAX on filtration
 * Adding Javascript loader on Pagination
 
 **PHP7 New Features Used**
@@ -100,6 +101,7 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 
 **Bug Fixes**
 * Fixing "$this" filtration bug
+* Fixing Symfony log warnings(Strings Translation)
 
 **Work Flow Optimizations**
 * Git repository is now branched to distinguish development flow from deployment flow
