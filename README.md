@@ -99,9 +99,11 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 * Group use declarations
 * Object type hinting
 
-**Bug Fixes**
+**Bug and Vulnerabilities Fixes**
 * Fixing "$this" filtration bug
 * Fixing Symfony log warnings(Strings Translation)
+* Rediecting logged in users if they try to open /login or /register
+* Better handling for framework exceptions so users couldn't see the real exception
 
 **Work Flow Optimizations**
 * Git repository is now branched to distinguish development flow from deployment flow
