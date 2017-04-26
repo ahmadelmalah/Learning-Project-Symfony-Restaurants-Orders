@@ -16,7 +16,8 @@ function getOrders(page){
         allOrdersTemplate = getAllOrdersTemplate(orders);
 
         $("#orders_count").html('(' + response["count"] + ' Orders)');
-        $("#orders").html(allOrdersTemplate + response["paginator"]);
+        $("#orders").html(allOrdersTemplate);
+        $("#paginator").html(response["paginator"]);
         $("#loader").fadeOut(333);
     }});
 }
