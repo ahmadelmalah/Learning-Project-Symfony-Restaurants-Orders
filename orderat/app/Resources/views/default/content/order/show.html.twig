@@ -11,7 +11,7 @@
 {% endfor %}
 
 <div id="order">
-  {% include 'default/content/order/component/order.html.twig' %}
+
 </div>
 
 {% endblock %}
@@ -19,34 +19,11 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <script src="/js/orderat.order-parser.js"></script>
     <script>
-    function jsonEscape(str)  {
-        return str.replace(/\n/g, '').replace(/\t/g, '');
-    }
-
-    var html = $("#order").html();
-    var ordersHTML = '{"orders": "[' + html + ']"}';
-    //alert(orders[0]["key"]);
-    var response = JSON.parse(jsonEscape(ordersHTML));
-    var orders = JSON.parse(jsonEscape(response["orders"]));
-    var allOrdersTemplate = '';
-    for (var key in orders) {
-         var order = orders[key];
-         alert(order["restaurant"]);
-         var orderTemplate = `
-         <div class="panel panel-success">
-           <div class="panel-heading">
-             <h3 class="panel-title"><b>${order["restaurant"]}</b> (created by: ${order["creator"]})</h3>
-           </div>
-           <div class="panel-body">
-             ${order["text"]}
-           </div>
-         </div>
-         `;
-         allOrdersTemplate += orderTemplate;
-     }
-    alert(allOrdersTemplate);
-    //var orders = JSON.parse(ajaxResult["orders"]);
-
+    var orderStream = `{% include 'default/content/order/component/order.html.twig' %}`;
+    var order = getResponseFromResponseStream(jsonEscape(orderStream));
+    var orderTemplate = getOrderTemplate(order);
+    $("#order").html(orderTemplate);
     </script>
 {% endblock %}
