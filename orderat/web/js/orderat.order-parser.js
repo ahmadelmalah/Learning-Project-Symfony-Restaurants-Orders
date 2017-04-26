@@ -9,7 +9,7 @@ function getOrderTemplate(order){
       <h3 class="panel-title"><b>${order["restaurant"]}</b> (created by: ${order["creator"]})</h3>
     </div>
     <div class="panel-body">
-      ${order["text"]}
+      ${order["content"]}
     </div>
   </div>
   `;

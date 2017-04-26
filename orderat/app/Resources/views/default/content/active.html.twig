@@ -38,8 +38,7 @@
 <!-- </div> -->
 
 
-<div id="orders">
-</div>
+<div id="orders"></div>
 
 {% endblock %}
 
@@ -47,48 +46,17 @@
     {{ parent() }}
      <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
      <script src="/js/orderat.order-parser.js"></script>
+     <script src="/js/orderat.ajax.js"></script>
      <script>
-     var filterObject = {};
-       {% for  key,value in params %}
-          filterObject["{{key}}"] = "{{value}}";
-       {% endfor %}
+      //Values from URL
+      var filterObject = {};
+      {% for  key,value in params %}
+        filterObject["{{key}}"] = "{{value}}";
+      {% endfor %}
+      var section = '{{ section }}';
 
-      function getAjaxUrlFilter(){
-        var url = '';
-        for (var prop in filterObject) {
-          url += 'filter[' + prop + ']' + '=' + filterObject[prop] + '&';
-        }
-        return url;
-      }
-
-
-
-     function getOrders(page){
-        $("#loader").fadeIn(333);
-        urlAjax = `/ajax/orders/{{ section }}?page=${page}&` + getAjaxUrlFilter();
-        //alert(urlAjax);
-         $.ajax({url: urlAjax, success: function(result){
-             var response = getResponseFromResponseStream(result);
-             var orders = getOrdersFromResponse(response);
-             allOrdersTemplate = getAllOrdersTemplate(orders);
-
-             $("#orders_count").html('(' + response["count"] + ' Orders)');
-             $("#orders").html(allOrdersTemplate + response["paginator"]);
-             $("#loader").fadeOut(333);
-         }});
-     }
-
-     getOrders(1);
-      filter_save.addEventListener("click", function() {
-        filterObject["restaurant"] = $("#filter_restaurant").val();
-        filterObject["state"] = $("#filter_state").val();
-        if( $("#filter_myorders").is(':checked') == true){
-          filterObject["myorders"] = 1;
-        }else{
-          filterObject["myorders"] = 0;
-        }
-         getOrders(1);
-       });
+      getOrders(1);
+      initializeFilterButton();
      </script>
 
 {% endblock %}

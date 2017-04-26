@@ -1,7 +1,7 @@
 {
 	\"restaurant\": \"{{ forder.restaurant.name }}\",
 	\"creator\": \"{{ forder.user }}\",
-	\"text\": \"
+	\"content\": \"
 		{% include 'default/content/order/component/progress.html.twig' %}
 		Status : {{ forder.state.name }} <br />
 		Started at : {{ forder.createdat |date('Y-m-d\\TH:i:sP') }} <br />
