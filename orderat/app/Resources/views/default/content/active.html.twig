@@ -60,15 +60,20 @@
         return url;
       }
 
+      function jsonEscape(str)  {
+          return str.replace(/\n/g, '').replace(/\t/g, '');
+      }
+
      function getOrders(page){
         $("#loader").fadeIn(333);
         urlAjax = `/ajax/orders/{{ section }}?page=${page}&` + getAjaxUrlFilter();
         //alert(urlAjax);
          $.ajax({url: urlAjax, success: function(result){
-              var ajaxResult = JSON.parse(result);
-              alert(ajaxResult["paginator"]);
+              console.log(jsonEscape(result));
+              var ajaxResult = JSON.parse(jsonEscape(result));
+              console.log('huh2');
+              //alert(ajaxResult["paginator"]);
              $("#orders_count").html('(' + ajaxResult["count"] + ' Orders)');
-             alert('dtry');
              var orders = JSON.parse(ajaxResult["orders"]);
              var allOrdersTemplate = '';
              for (var key in orders) {
@@ -76,10 +81,10 @@
                   var orderTemplate = `
                   <div class="panel panel-success">
                     <div class="panel-heading">
-                      <h3 class="panel-title">${order["restaurant"]}</h3>
+                      <h3 class="panel-title"><b>${order["restaurant"]}</b> (created by: ${order["creator"]})</h3>
                     </div>
                     <div class="panel-body">
-                    what
+                      ${order["text"]}
                     </div>
                   </div>
                   `;

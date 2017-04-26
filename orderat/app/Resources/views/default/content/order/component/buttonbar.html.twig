@@ -1,26 +1,21 @@
-<div class="btn-group" role="group">
-
-<a href="/orders/{{ forder.id }}/show" class="btn btn-default btn-sm">Preview</a>
-
+<div class=\\\"btn-group\\\" role=\\\"group\\\">
+<a href=\\\"/orders/{{ forder.id }}/show\\\" class=\\\"btn btn-default btn-sm\\\">Preview</a>
 {% if forder.state.id ==1 %}
-<a href="/orders/{{ forder.id }}/add" class="btn btn-success btn-sm">Wait, Add my item!</a>
+<a href=\\\"/orders/{{ forder.id }}/add\\\" class=\\\"btn btn-success btn-sm\\\">Wait, Add my item!</a>
 {% endif %}
-
 {% if app.user.id == forder.user.id and forder.state.id ==1 %}
-  <a href="/orders/{{ forder.id }}/ready" class="btn btn-info btn-sm">Enough! we are now ready..</a>
+  <a href=\\\"/orders/{{ forder.id }}/ready\\\" class=\\\"btn btn-info btn-sm\\\">Enough! we are now ready..</a>
 {% endif %}
 {% if app.user.id == forder.user.id and forder.state.id ==2 %}
-  <a href="/orders/{{ forder.id }}/call" class="btn btn-warning btn-sm">We have called!</a>
+  <a href=\\\"/orders/{{ forder.id }}/call\\\" class=\\\"btn btn-warning btn-sm\\\">We have called!</a>
 {% endif %}
 {% if app.user.id == forder.user.id and forder.state.id ==4 %}
-  <a href="/orders/{{ forder.id }}/complete" class="btn btn-primary btn-sm">We have completed!</a>
+  <a href=\\\"/orders/{{ forder.id }}/complete\\\" class=\\\"btn btn-primary btn-sm\\\">We have completed!</a>
 {% endif %}
-
 </div>
-
 {% if app.user.id == forder.user.id and forder.state.id ==3 %}
-<form action="/orders/{{ forder.id }}/deliver" method="post">
-  <input type="number" required="required" name="price">
-  <button type="submit" class="btn btn-danger btn-sm"> hmmm! The order is delivered. </button>
+<form action=\\\"/orders/{{ forder.id }}/deliver\\\" method=\\\"post\\\">
+  <input type=\\\"number\\\" required=\\\"required\\\" name=\\\"price\\\">
+  <button type=\\\"submit\\\" class=\\\"btn btn-danger btn-sm\\\"> hmmm! The order is delivered. </button>
 </form>
 {% endif %}
