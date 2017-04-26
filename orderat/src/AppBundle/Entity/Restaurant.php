@@ -40,7 +40,7 @@ class Restaurant
     /**
      * @var string
      *
-     * @ORM\Column(name="menuurl", type="string", length=255, nullable=false)
+     * @ORM\Column(name="menuurl", type="string", length=255, nullable=true)
      */
     private $menuurl;
 

@@ -13,7 +13,10 @@ class RestaurantType extends AbstractType
     {
         $builder
           ->add('name', TextType::class)
-          ->add('menuurl', TextType::class, array('label' => 'Menu url'))
+          ->add('menuurl', TextType::class, array(
+            'label' => 'Menu url',
+            'required'    => false
+          ))
           ->add('save', SubmitType::class, array('label' => 'Add Restaurant'))
         ;
     }
