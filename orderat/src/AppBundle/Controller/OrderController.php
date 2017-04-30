@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace AppBundle\Controller;
 //Framework
@@ -102,11 +102,14 @@ class OrderController extends FOSRestController
      * @Route("/orders/{id}/add", name="addItems")
      * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function addAction(Request $request, $forder)
+    public function addAction(Request $request, Forder $forder)
     {
-       $item = new Item();
-       $form = $this->createForm(ItemType::class, $item);
-       $form->handleRequest($request);
+        if (!$this->get('app.OrderService')->isActive($forder) == true){
+            return $this->redirectToRoute('homepage');
+        }
+        $item = new Item();
+        $form = $this->createForm(ItemType::class, $item);
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try{
               $this->get('app.ItemService')->create($item, $forder);

@@ -83,6 +83,10 @@ class OrderService
       $this->save($forder);
     }
 
+    public function isActive(Forder $forder){
+        return $forder->getState()->getID() == State::ACTIVE;
+    }
+
     /*
     * Gets some orders according to some filters
     * Here we use state as a filter
@@ -119,7 +123,7 @@ class OrderService
 
         if(isset($urlFilter['myorders']) && intval($urlFilter['myorders']) === 1)
           $queryFilter->addFilter('user', $userID);
-          
+
         if(isset($urlFilter['restaurant']))
           $queryFilter->addFilter('restaurant', $urlFilter['restaurant']);
 

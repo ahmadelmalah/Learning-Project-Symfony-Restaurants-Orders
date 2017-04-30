@@ -26,7 +26,6 @@ class Item
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 3,
      *      minMessage = "Item name must be at least 3 characters long",
@@ -40,6 +39,7 @@ class Item
      * @var int
      *
      * @ORM\Column(name="quantity", type="integer")
+     * @Assert\NotBlank()
      * @Assert\Type(
      *     type="integer",
      *     message="The value {{ value }} is not a valid {{ type }}."
@@ -56,7 +56,6 @@ class Item
     /**
      * @ORM\ManyToOne(targetEntity="Forder", inversedBy="items")
      * @ORM\JoinColumn(name="forder_id", referencedColumnName="id")
-     * @Assert\NotBlank()
      */
      private $forder;
 
