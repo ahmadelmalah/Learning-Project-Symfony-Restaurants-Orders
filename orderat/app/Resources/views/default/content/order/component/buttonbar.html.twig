@@ -15,7 +15,7 @@
 </div>
 {% if app.user.id == forder.user.id and forder.state.id ==3 %}
 <form action=\\\"/orders/{{ forder.id }}/deliver\\\" method=\\\"post\\\">
-  <input type=\\\"number\\\" required=\\\"required\\\" name=\\\"price\\\">
+  <input type=\\\"number\\\" required=\\\"required\\\" name=\\\"price\\\"  step=0.1>
   <button type=\\\"submit\\\" class=\\\"btn btn-danger btn-sm\\\"> hmmm! The order is delivered. </button>
 </form>
 {% endif %}
