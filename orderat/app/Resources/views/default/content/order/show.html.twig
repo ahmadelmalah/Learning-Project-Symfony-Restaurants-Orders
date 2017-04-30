@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
     <script src="/js/orderat.order-parser.js"></script>
     <script>
+    {% set single_view = 1 %}
     var orderStream = `{% include 'default/content/order/component/order.html.twig' %}`;
     var order = getResponseFromResponseStream(jsonEscape(orderStream));
     var orderTemplate = getOrderTemplate(order);

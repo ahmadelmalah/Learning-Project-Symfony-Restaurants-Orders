@@ -1,5 +1,7 @@
 <div class=\\\"btn-group\\\" role=\\\"group\\\">
+{% if single_view is defined == false %}
 <a href=\\\"/orders/{{ forder.id }}/show\\\" class=\\\"btn btn-default btn-sm\\\">Preview</a>
+{% endif %}
 {% if forder.state.id ==1 %}
 <a href=\\\"/orders/{{ forder.id }}/add\\\" class=\\\"btn btn-success btn-sm\\\">Wait, Add my item!</a>
 {% endif %}
