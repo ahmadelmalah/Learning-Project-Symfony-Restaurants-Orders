@@ -43,14 +43,20 @@ class OrderService
 
     public function makeReady(Forder $forder){
         $this->changeOrderState($forder, State::READY);
+        $this->save($forder);
     }
 
     public function makeWaiting(Forder $forder){
-        $forder->setCalledAt(new \DateTime("now"));
         $this->changeOrderState($forder, State::WAITING);
+
+        $forder->setCalledAt(new \DateTime("now"));
+
+        $this->save($forder);
     }
 
     public function makeDelivered(Forder $forder, $price){
+        $this->changeOrderState($forder, State::DELIVERED);
+
         if(is_numeric($price) == false){
             throw new Exception("Price should be a number");
         }
@@ -59,12 +65,14 @@ class OrderService
         }
         $forder->setDeliveredAt(new \DateTime("now"));
         $forder->setPrice($price);
-        $this->changeOrderState($forder, State::DELIVERED);
+
+        $this->save($forder);
     }
 
     public function makeComplete(Forder $forder){
-        $forder->setCompletedAt(new \DateTime("now"));
         $this->changeOrderState($forder, State::COMPLETE);
+        $forder->setCompletedAt(new \DateTime("now"));
+        $this->save($forder);
     }
 
     public function changeOrderState(Forder $forder, $StateID){
@@ -79,8 +87,6 @@ class OrderService
 
       $state = $this->entityManager->getRepository('AppBundle:State')->find($StateID);
       $forder->setState($state);
-
-      $this->save($forder);
     }
 
     public function isActive(Forder $forder){
