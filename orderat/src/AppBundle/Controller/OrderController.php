@@ -132,7 +132,7 @@ class OrderController extends FOSRestController
      * @Route("/orders/{id}/show", name="showOrder")
      * @ParamConverter("forder", class="AppBundle:Forder")
      */
-    public function showAction(Request $request, $forder)
+    public function showAction(Request $request, Forder $forder)
     {
         return $this->render('default/content/order/show.html.twig', [
             'forder' => $forder
