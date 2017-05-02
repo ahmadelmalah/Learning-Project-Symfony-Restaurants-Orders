@@ -92,7 +92,7 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 **New Features**
 * Applying AJAX on pagination
 * Applying AJAX on filtration
-* Adding Javascript loader on Pagination
+* Adding Javascript loader
 
 **PHP7 New Features Used**
 * Constant arrays
@@ -102,11 +102,12 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 **Javascript ES6 New Features Used**
 * Template literals
 
-**Bug and Vulnerabilities Fixes**
+**Bugs, Vulnerabilities and validations Optimizations**
 * Fixing "$this" filtration bug
 * Fixing Symfony log warnings(Strings Translation)
-* Rediecting logged in users if they try to open /login or /register
+* Redirecting logged in users if they try to open /login or /register
 * Better handling for framework exceptions so users couldn't see the real exception
+* Better handling for forms validations
 
 **Work Flow Optimizations**
 * Git repository is now branched to distinguish development flow from deployment flow
