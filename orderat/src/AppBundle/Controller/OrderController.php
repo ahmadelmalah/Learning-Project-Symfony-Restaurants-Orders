@@ -25,12 +25,6 @@ class OrderController extends FOSRestController
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
 
-        $forders = $this->get('app.OrderService')->getOrdersPaginated(
-          $request->get('_route'), //$section parm: current route
-          $request->query->getInt('page', 1), //$Page parm
-          $request->query->get('filter') //$filter parm: an array collects all filter daa
-        );
-
         $filterArray = array();
         if( $request->get('filter') ){
           $filterArray = $request->get('filter');
@@ -38,7 +32,6 @@ class OrderController extends FOSRestController
         //return new Response($request->get('filter'));
         if($request->get('_route') =='active' || $request->get('_route') == 'archive'){
           return $this->render('default/content/active.html.twig', [
-              'forders' => $forders,
               'form_filter' => $form->createView(),
               'section' => $request->get('_route'),
               //'page' => $request->query->getInt('page', 1),
