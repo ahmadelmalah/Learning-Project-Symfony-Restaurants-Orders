@@ -130,6 +130,7 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 
 * Services functions are now throwing exceptions instead of returning error codes
 * Functions with the same names represent the same logic (e.g each entity-service has create() and save() functions)
+* Object type hinting is used in Controllers and Services functions
 
 *Utility Optimizations*
 
