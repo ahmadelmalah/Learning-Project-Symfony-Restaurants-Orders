@@ -21,10 +21,10 @@ class ForderRepository extends \Doctrine\ORM\EntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getCount(){
+    public function getCount($filter){
       return $this->getEntityManager()
             ->createQuery(
-                'SELECT count(f) FROM AppBundle:Forder f WHERE f.state=4 and f.price =10'
+                'SELECT count(f) FROM AppBundle:Forder f WHERE ' . $filter
             )
             ->getSingleScalarResult();
     }

@@ -93,47 +93,24 @@ class OrderService
         return $forder->getState()->getID() == State::ACTIVE;
     }
 
-    /*
-    * Gets some orders according to some filters
-    * Here we use state as a filter
-    */
-    public function getOrdersCount(){
-      return $this->entityManager->getRepository('AppBundle:Forder')->getCount();
+    public function getOrdersCount($section, $start = 1, $urlFilter = null){
+        $filter = $this->getQueryFilterArray($section, $urlFilter, $this->user->getID())->getSQLFilter();
+        return $this->entityManager->getRepository('AppBundle:Forder')->getCount($filter);
     }
     public function getOrders($section, $start = 1, $urlFilter = null){
       $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy(
-        $this->getQueryFilterArray($section, $urlFilter, $this->user->getID()),
-        $this->getQuerySortArray()
+        $this->getQueryFilterArray($section, $urlFilter, $this->user->getID())->getArray() ,
+        $this->getQuerySortArray(),
+        ORDERS_PER_PAGE,
+        ($start-1) * ORDERS_PER_PAGE
       );
 
       return $forders;
     }
-    // public function getOrders($section, $start = 1, $urlFilter = null){
-    //   $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy(
-    //     $this->getQueryFilterArray($section, $urlFilter, $this->user->getID()),
-    //     $this->getQuerySortArray(),
-    //     ORDERS_PER_PAGE,
-    //     $start
-    //   );
-    //
-    //   return $forders;
-    // }
-
-    public function getOrdersPaginated($section, $start = 1, $urlFilter = null){
-      $forders = $this->getOrders($section, $start, $urlFilter);
-
-      $fordersPaginated =  $this->knp_paginator->paginate(
-          $forders,
-          $start,
-          ORDERS_PER_PAGE
-      );
-
-      return $fordersPaginated;
-    }
 
     static function getQueryFilterArray($section, $urlFilter = null, $userID = null){
-        $queryFilter = new QueryFilter;
 
+        $queryFilter = new QueryFilter;
         if( in_array($section, CURRENT_ORDERS_ROUTES_ARRAY) ){
           $queryFilter->addFilter('state', CURRENT_ORDERS_STATES_ARRAY);
         }elseif( in_array($section, HISTORY_ORDERS_ROUTES_ARRAY) ){
@@ -149,7 +126,8 @@ class OrderService
         if(isset($urlFilter['state']))
           $queryFilter->addFilter('state', $urlFilter['state']);
 
-        return $queryFilter->getArray();
+
+        return $queryFilter;
     }
 
     private function getQuerySortArray(){

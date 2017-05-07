@@ -56,13 +56,19 @@ class OrderController extends FOSRestController
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
 
-        $forders = $this->get('app.OrderService')->getOrdersPaginated(
+        $forders = $this->get('app.OrderService')->getOrders(
           $request->get('_route'), //$section parm: current route
           $request->query->getInt('page', 1), //$Page parm
           $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
-        $paginator = new PaginatorUtil(9, 5);
+        $count = $this->get('app.OrderService')->getOrdersCount(
+          $request->get('_route'), //$section parm: current route
+          $request->query->getInt('page', 1), //$Page parm
+          $request->query->get('filter') //$filter parm: an array collects all filter daa
+        );
+
+        $paginator = new PaginatorUtil($count, 5);
         $paginator->navigateToPage($request->query->getInt('page', 1));
 
         //return new Response($num_of_items);
@@ -70,6 +76,7 @@ class OrderController extends FOSRestController
         if($request->get('_route') =='ajax-active' || $request->get('_route') == 'ajax-archive'){
           return $this->render('default/content/orders.ajax.html.twig', [
               'forders' => $forders,
+              'count' => $count,
               'paginator' => $paginator,
               'form_filter' => $form->createView(),
           ]);

@@ -22,8 +22,7 @@ class UsersController extends FOSRestController
   public function testAction(Request $request)
   {
     //$request = $this->get('request');
-      $hi = $this->get('app.OrderService')->getOrdersCount();
-
+      $hi = $this->get('app.OrderService')->getOrdersCount('active');
 
       return new Response($hi);
   }

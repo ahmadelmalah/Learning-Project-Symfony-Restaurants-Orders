@@ -1,5 +1,5 @@
 {
-  "count": "{{forders.getTotalItemCount}}",
+  "count": "{{count}}",
   "orders": "[{% for forder in forders %}{% include 'default/content/order/component/order.html.twig' %}{% if loop.last == false %},{% endif %}{% endfor %}]",
   "paginator": "<div class=\"row\"><div class=\"col-md-12 col-centered \" style=\"text-align: center;\"><div class=\"navigation\">{% include 'default/content/paginator.html.twig' %}</div></div></div>"
 }
