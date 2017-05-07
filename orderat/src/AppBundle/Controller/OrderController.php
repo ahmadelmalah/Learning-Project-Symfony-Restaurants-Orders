@@ -13,6 +13,8 @@ use FOS\RestBundle\Controller\FOSRestController;
 use AppBundle\Entity\{Restaurant, Forder, Item};
 //Forms
 use AppBundle\Form\{RestaurantType, ForderType, ItemType, FilterType};
+//Utilities
+use AppBundle\Utils\PaginatorUtil;
 
 class OrderController extends FOSRestController
 {
@@ -60,10 +62,15 @@ class OrderController extends FOSRestController
           $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
+        $paginator = new PaginatorUtil(9, 5);
+        $paginator->navigateToPage($request->query->getInt('page', 1));
+
+        //return new Response($num_of_items);
         //return new Response($request->get('_route'));
         if($request->get('_route') =='ajax-active' || $request->get('_route') == 'ajax-archive'){
           return $this->render('default/content/orders.ajax.html.twig', [
               'forders' => $forders,
+              'paginator' => $paginator,
               'form_filter' => $form->createView(),
           ]);
         }

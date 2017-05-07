@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\Config\Definition\Exception\Exception;
+use AppBundle\Utils\PaginatorUtil;
 
 
 
@@ -21,8 +22,9 @@ class UsersController extends FOSRestController
   public function testAction(Request $request)
   {
     //$request = $this->get('request');
-      throw new Exception("Your Item was not add, This order doesn't recieve more items!!");
-      $translated = $this->get('translator')->trans('Symfony is great');
-      return new Response($translated);
+      $hi = $this->get('app.OrderService')->getOrdersCount();
+
+
+      return new Response($hi);
   }
 }

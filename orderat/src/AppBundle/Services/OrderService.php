@@ -97,6 +97,9 @@ class OrderService
     * Gets some orders according to some filters
     * Here we use state as a filter
     */
+    public function getOrdersCount(){
+      return $this->entityManager->getRepository('AppBundle:Forder')->getCount();
+    }
     public function getOrders($section, $start = 1, $urlFilter = null){
       $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy(
         $this->getQueryFilterArray($section, $urlFilter, $this->user->getID()),
@@ -105,6 +108,16 @@ class OrderService
 
       return $forders;
     }
+    // public function getOrders($section, $start = 1, $urlFilter = null){
+    //   $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy(
+    //     $this->getQueryFilterArray($section, $urlFilter, $this->user->getID()),
+    //     $this->getQuerySortArray(),
+    //     ORDERS_PER_PAGE,
+    //     $start
+    //   );
+    //
+    //   return $forders;
+    // }
 
     public function getOrdersPaginated($section, $start = 1, $urlFilter = null){
       $forders = $this->getOrders($section, $start, $urlFilter);
