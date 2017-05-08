@@ -136,3 +136,17 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 
 * New utility "Query Filter" is added to ease filtration
 * APIUtility is updated to return views
+
+What’s new in version beta 0.4
+------------------------------
+**Major Changes**
+* Moving from knpPaginator to PaginatorUtility
+
+**Performance Optimizations**
+* The new paginator doesn't require fetching all data
+
+**Code Base Optimizations**
+
+*Code Base Optimizations*
+
+* Creating ServiceDataPersistanceTrait to hold all similar functions shared between services
