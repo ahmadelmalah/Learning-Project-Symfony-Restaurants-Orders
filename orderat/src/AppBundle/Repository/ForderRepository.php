@@ -21,7 +21,7 @@ class ForderRepository extends \Doctrine\ORM\EntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getCount($filter){
+    public function getCount(string $filter){
       return $this->getEntityManager()
             ->createQuery(
                 'SELECT count(f) FROM AppBundle:Forder f WHERE ' . $filter

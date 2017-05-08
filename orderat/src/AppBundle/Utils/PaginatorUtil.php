@@ -10,7 +10,7 @@ class PaginatorUtil
   private $item_per_page;
   private $current_page;
 
-  public function __construct($num_of_items, $item_per_page, $current_page = 1){
+  public function __construct(int $num_of_items, int $item_per_page, int $current_page = 1){
     $this->num_of_items = $num_of_items;
     $this->item_per_page = $item_per_page;
 
@@ -22,7 +22,7 @@ class PaginatorUtil
     $this->num_of_pages = ceil($this->num_of_items/ $this->item_per_page);
   }
 
-  public function navigateToPage($page){
+  public function navigateToPage(int $page){
     if(is_numeric($page) == false){
         throw new Exception("Wrong Page Number! Invalid Entry..");
     }

@@ -26,7 +26,6 @@ class OrderService
      {
          $this->entityManager = $entityManager;
          $this->user = $user;
-         $this->knp_paginator = $knp_paginator_service;
      }
 
      /*
@@ -57,7 +56,7 @@ class OrderService
         $this->save($forder);
     }
 
-    public function makeDelivered(Forder $forder, $price){
+    public function makeDelivered(Forder $forder, int $price){
         $this->changeOrderState($forder, State::DELIVERED);
 
         if(is_numeric($price) == false){
@@ -78,7 +77,7 @@ class OrderService
         $this->save($forder);
     }
 
-    public function changeOrderState(Forder $forder, $StateID){
+    public function changeOrderState(Forder $forder, int $StateID){
       //Validation: User should be the creator of the restaurant
       if($this->user->getID() != $forder->getUser()->getID()){
         throw new Exception("You're not allowed to update this order!");
@@ -96,7 +95,7 @@ class OrderService
         return $forder->getState()->getID() == State::ACTIVE;
     }
 
-    public function getOrdersCount($section, $start = 1, $urlFilter = null){
+    public function getOrdersCount(string $section, int $start = 1, array $urlFilter = null){
         $filter = $this->getQueryFilterArray($section, $urlFilter, $this->user->getID())->getSQLFilter();
         return $this->entityManager->getRepository('AppBundle:Forder')->getCount($filter);
     }
@@ -111,7 +110,7 @@ class OrderService
       return $forders;
     }
 
-    static function getQueryFilterArray($section, $urlFilter = null, $userID = null){
+    static function getQueryFilterArray(string $section, array $urlFilter = null, int $userID = null){
 
         $queryFilter = new QueryFilter;
         if( in_array($section, CURRENT_ORDERS_ROUTES_ARRAY) ){
@@ -137,7 +136,7 @@ class OrderService
         return array('id' => 'DESC');
     }
 
-    public function getServiceConstant($constant){
+    public function getServiceConstant(string $constant){
       return constant($constant);
     }
 

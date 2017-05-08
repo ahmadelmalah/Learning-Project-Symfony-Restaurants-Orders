@@ -37,7 +37,7 @@ class QueryFilter
       return $filter;
     }
 
-    public function addFilter($key, $value, $condition = true){
+    public function addFilter(string $key, $value, bool $condition = true){
         if($condition == false) return;
         if(isset($value) == false) return;
         if(!$value) return;
