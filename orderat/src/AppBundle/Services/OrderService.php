@@ -134,6 +134,10 @@ class OrderService
         return array('id' => 'DESC');
     }
 
+    public function getServiceConstant($constant){
+      return constant($constant);
+    }
+
     private function save(Forder $forder){
       $this->entityManager->persist($forder);
       $this->entityManager->flush();

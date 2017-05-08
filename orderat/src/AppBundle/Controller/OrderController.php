@@ -57,6 +57,7 @@ class OrderController extends FOSRestController
         $form->handleRequest($request);
 
         $page = $request->query->getInt('page', 1);
+        $orders_per_page = $this->get('app.OrderService')->getServiceConstant('ORDERS_PER_PAGE');
 
         $forders = $this->get('app.OrderService')->getOrders(
           $request->get('_route'), //$section parm: current route
@@ -70,7 +71,7 @@ class OrderController extends FOSRestController
           $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
-        $paginator = new PaginatorUtil($count, 5, $page);
+        $paginator = new PaginatorUtil($count, $orders_per_page, $page);
 
         //return new Response($num_of_items);
         //return new Response($request->get('_route'));
