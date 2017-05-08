@@ -6,6 +6,7 @@ use AppBundle\Entity\State;
 use AppBundle\Entity\Forder;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use AppBundle\Utils\QueryFilter;
+use AppBundle\Utils\Traits\ServiceDataPersistenceTrait;
 
 include('Constants/OrderServiceConstants.php');
 
@@ -14,6 +15,8 @@ class OrderService
     protected $entityManager;
     protected $user;
     protected $knp_paginator;
+
+    use ServiceDataPersistenceTrait;
         /**
     * Helper constructor.
     * @param EntityManager $entityManager
@@ -138,8 +141,4 @@ class OrderService
       return constant($constant);
     }
 
-    private function save(Forder $forder){
-      $this->entityManager->persist($forder);
-      $this->entityManager->flush();
-    }
 }
