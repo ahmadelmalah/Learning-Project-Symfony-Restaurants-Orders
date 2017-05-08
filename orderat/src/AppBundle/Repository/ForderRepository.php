@@ -21,30 +21,11 @@ class ForderRepository extends \Doctrine\ORM\EntityRepository
             ->getSingleScalarResult();
     }
 
-    // public function getForders(){
-    //   $rsm = new ResultSetMapping();
-    //
-    //   $rsm->addEntityResult('AppBundle\Entity\Forder', 'f');
-    //   $rsm->addFieldResult('f', 'id', 'id');
-    //   $rsm->addFieldResult('f', 'created_at', 'createdAt');
-    //   $rsm->addFieldResult('f', 'called_at', 'calledAt');
-    //   $rsm->addFieldResult('f', 'delivered_at', 'deliveredAt');
-    //   $rsm->addFieldResult('f', 'completed_at', 'completedAt');
-    //   $rsm->addFieldResult('f', 'price', 'price');
-    //   $rsm->addJoinedEntityResult('AppBundle\Entity\State', 's' , 'f', 'state');
-    //
-    //   //$rsm->addFieldResult('f', 'id', 'id');
-    //
-    //   $result =  $this->getEntityManager()
-    //         ->createNativeQuery(
-    //             'SELECT * FROM `forder` f
-    //             LEFT JOIN state s ON f.state_id = s.id'
-    //             FORCE INDEX (IDX_5C6429615D83CC1),
-    //
-    //             $rsm
-    //         )
-    //         ->getResult();
-    //   dump($result);die();
-    //   return $result;
-    // }
+    public function getCount(string $filter){
+      return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(f) FROM AppBundle:Forder f WHERE ' . $filter
+            )
+            ->getSingleScalarResult();
+    }
 }

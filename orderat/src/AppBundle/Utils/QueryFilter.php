@@ -4,6 +4,7 @@ namespace AppBundle\Utils;
 class QueryFilter
 {
     private $queryFilterArray = array();
+    //private $returnStrategy = NULL;
 
     public function __construct(){
 
@@ -17,7 +18,26 @@ class QueryFilter
       return $this->queryFilterArray;
     }
 
-    public function addFilter($key, $value, $condition = true){
+    public function getSQLFilter(){
+      $numItems = count($this->queryFilterArray);
+      $i = 0;
+      $filter = '';
+
+      foreach ($this->queryFilterArray as $key => $value) {
+        if (is_array($value)){
+          $filter .= 'f.' . $key . ' in(' . implode($value,',') . ')';
+        }else{
+          $filter .= 'f.' . $key . '=' . $value;
+        }
+
+        if(++$i != $numItems) {
+          $filter .= ' AND ';
+        }
+      }
+      return $filter;
+    }
+
+    public function addFilter(string $key, $value, bool $condition = true){
         if($condition == false) return;
         if(isset($value) == false) return;
         if(!$value) return;

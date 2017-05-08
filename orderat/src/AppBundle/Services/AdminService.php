@@ -18,7 +18,7 @@ class AdminService
         $this->cache = $cacheService;
     }
 
-    public function getTotal($entity){
+    public function getTotal(string $entity){
         $cacheKey = "count_{$entity}";
 
         //if data is cached, return it and exit
@@ -32,7 +32,7 @@ class AdminService
         return $response;
     }
 
-    public function getTotalFromRepo($entity){
+    public function getTotalFromRepo(string $entity){
       switch ($entity) {
         case 'users':
           $repoName = 'AppBundle:User';
@@ -51,7 +51,7 @@ class AdminService
       return $this->entityManager->getRepository($repoName)->getTotal();
     }
 
-    public function saveDataToCache($key, $value){
+    public function saveDataToCache(string $key, bool $value){
       $this->cache->save($key, $value, 60*15);
       $this->checkAdminCache();
     }

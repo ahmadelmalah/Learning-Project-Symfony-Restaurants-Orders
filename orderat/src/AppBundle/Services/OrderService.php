@@ -6,6 +6,7 @@ use AppBundle\Entity\State;
 use AppBundle\Entity\Forder;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use AppBundle\Utils\QueryFilter;
+use AppBundle\Utils\Traits\ServiceDataPersistenceTrait;
 
 include('Constants/OrderServiceConstants.php');
 
@@ -14,6 +15,8 @@ class OrderService
     protected $entityManager;
     protected $user;
     protected $knp_paginator;
+
+    use ServiceDataPersistenceTrait;
         /**
     * Helper constructor.
     * @param EntityManager $entityManager
@@ -23,7 +26,6 @@ class OrderService
      {
          $this->entityManager = $entityManager;
          $this->user = $user;
-         $this->knp_paginator = $knp_paginator_service;
      }
 
      /*
@@ -54,7 +56,7 @@ class OrderService
         $this->save($forder);
     }
 
-    public function makeDelivered(Forder $forder, $price){
+    public function makeDelivered(Forder $forder, float $price){
         $this->changeOrderState($forder, State::DELIVERED);
 
         if(is_numeric($price) == false){
@@ -75,7 +77,7 @@ class OrderService
         $this->save($forder);
     }
 
-    public function changeOrderState(Forder $forder, $StateID){
+    public function changeOrderState(Forder $forder, int $StateID){
       //Validation: User should be the creator of the restaurant
       if($this->user->getID() != $forder->getUser()->getID()){
         throw new Exception("You're not allowed to update this order!");
@@ -93,34 +95,24 @@ class OrderService
         return $forder->getState()->getID() == State::ACTIVE;
     }
 
-    /*
-    * Gets some orders according to some filters
-    * Here we use state as a filter
-    */
+    public function getOrdersCount(string $section, int $start = 1, array $urlFilter = null){
+        $filter = $this->getQueryFilterArray($section, $urlFilter, $this->user->getID())->getSQLFilter();
+        return $this->entityManager->getRepository('AppBundle:Forder')->getCount($filter);
+    }
     public function getOrders($section, $start = 1, $urlFilter = null){
       $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy(
-        $this->getQueryFilterArray($section, $urlFilter, $this->user->getID()),
-        $this->getQuerySortArray()
+        $this->getQueryFilterArray($section, $urlFilter, $this->user->getID())->getArray() ,
+        $this->getQuerySortArray(),
+        ORDERS_PER_PAGE,
+        ($start-1) * ORDERS_PER_PAGE
       );
 
       return $forders;
     }
 
-    public function getOrdersPaginated($section, $start = 1, $urlFilter = null){
-      $forders = $this->getOrders($section, $start, $urlFilter);
+    static function getQueryFilterArray(string $section, array $urlFilter = null, int $userID = null){
 
-      $fordersPaginated =  $this->knp_paginator->paginate(
-          $forders,
-          $start,
-          ORDERS_PER_PAGE
-      );
-
-      return $fordersPaginated;
-    }
-
-    static function getQueryFilterArray($section, $urlFilter = null, $userID = null){
         $queryFilter = new QueryFilter;
-
         if( in_array($section, CURRENT_ORDERS_ROUTES_ARRAY) ){
           $queryFilter->addFilter('state', CURRENT_ORDERS_STATES_ARRAY);
         }elseif( in_array($section, HISTORY_ORDERS_ROUTES_ARRAY) ){
@@ -136,15 +128,16 @@ class OrderService
         if(isset($urlFilter['state']))
           $queryFilter->addFilter('state', $urlFilter['state']);
 
-        return $queryFilter->getArray();
+
+        return $queryFilter;
     }
 
     private function getQuerySortArray(){
         return array('id' => 'DESC');
     }
 
-    private function save(Forder $forder){
-      $this->entityManager->persist($forder);
-      $this->entityManager->flush();
+    public function getServiceConstant(string $constant){
+      return constant($constant);
     }
+
 }

@@ -13,6 +13,8 @@ use FOS\RestBundle\Controller\FOSRestController;
 use AppBundle\Entity\{Restaurant, Forder, Item};
 //Forms
 use AppBundle\Form\{RestaurantType, ForderType, ItemType, FilterType};
+//Utilities
+use AppBundle\Utils\PaginatorUtil;
 
 class OrderController extends FOSRestController
 {
@@ -54,16 +56,30 @@ class OrderController extends FOSRestController
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
 
-        $forders = $this->get('app.OrderService')->getOrdersPaginated(
+        $page = $request->query->getInt('page', 1);
+        $orders_per_page = $this->get('app.OrderService')->getServiceConstant('ORDERS_PER_PAGE');
+
+        $forders = $this->get('app.OrderService')->getOrders(
           $request->get('_route'), //$section parm: current route
-          $request->query->getInt('page', 1), //$Page parm
+          $page,
           $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
+        $count = $this->get('app.OrderService')->getOrdersCount(
+          $request->get('_route'), //$section parm: current route
+          $page,
+          $request->query->get('filter') //$filter parm: an array collects all filter daa
+        );
+
+        $paginator = new PaginatorUtil($count, $orders_per_page, $page);
+
+        //return new Response($num_of_items);
         //return new Response($request->get('_route'));
         if($request->get('_route') =='ajax-active' || $request->get('_route') == 'ajax-archive'){
           return $this->render('default/content/orders.ajax.html.twig', [
               'forders' => $forders,
+              'count' => $count,
+              'paginator' => $paginator,
               'form_filter' => $form->createView(),
           ]);
         }
@@ -173,7 +189,7 @@ class OrderController extends FOSRestController
     public function deliverAction(Request $request, Forder $forder)
     {
         try{
-          $price = $request->get('price');
+          $price = (float) $request->get('price');
           $this->get('app.OrderService')->makeDelivered($forder, $price);
         }catch(Exception $e){
           $this->get('session')->getFlashBag()->add('errors', $e->getMessage());

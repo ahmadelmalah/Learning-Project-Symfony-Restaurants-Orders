@@ -6,6 +6,7 @@ use AppBundle\Entity\State;
 use AppBundle\Entity\Item;
 use AppBundle\Entity\Forder;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use AppBundle\Utils\Traits\ServiceDataPersistenceTrait;
 
 
 class ItemService
@@ -13,6 +14,7 @@ class ItemService
     protected $entityManager;
     protected $user;
 
+    use ServiceDataPersistenceTrait;
     /**
     * Helper constructor.
     * @param EntityManager $entityManager
@@ -37,10 +39,5 @@ class ItemService
         $item->setUser($this->user);
 
         $this->save($item);
-    }
-
-    private function save(Item $item){
-        $this->entityManager->persist($item);
-        $this->entityManager->flush();
     }
 }
