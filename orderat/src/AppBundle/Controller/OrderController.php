@@ -56,20 +56,21 @@ class OrderController extends FOSRestController
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
 
+        $page = $request->query->getInt('page', 1);
+
         $forders = $this->get('app.OrderService')->getOrders(
           $request->get('_route'), //$section parm: current route
-          $request->query->getInt('page', 1), //$Page parm
+          $page,
           $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
         $count = $this->get('app.OrderService')->getOrdersCount(
           $request->get('_route'), //$section parm: current route
-          $request->query->getInt('page', 1), //$Page parm
+          $page,
           $request->query->get('filter') //$filter parm: an array collects all filter daa
         );
 
-        $paginator = new PaginatorUtil($count, 5);
-        $paginator->navigateToPage($request->query->getInt('page', 1));
+        $paginator = new PaginatorUtil($count, 5, $page);
 
         //return new Response($num_of_items);
         //return new Response($request->get('_route'));

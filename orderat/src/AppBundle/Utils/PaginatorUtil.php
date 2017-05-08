@@ -10,11 +10,12 @@ class PaginatorUtil
   private $item_per_page;
   private $current_page;
 
-  public function __construct($num_of_items, $item_per_page){
+  public function __construct($num_of_items, $item_per_page, $current_page = 1){
     $this->num_of_items = $num_of_items;
     $this->item_per_page = $item_per_page;
 
     $this->calcNumberOfPages();
+    $this->navigateToPage($current_page);
   }
 
   public function calcNumberOfPages(){
@@ -31,32 +32,42 @@ class PaginatorUtil
     if($page > $this->num_of_pages){
         $page = $this->num_of_pages;
     }
+
     $this->current_page = $page;
   }
 
-  public function hasNext(){
+  public function hasNextPage(){
     $this->checkValidPageOrFail();
     return $this->current_page < $this->num_of_pages;
   }
 
-  public function getNext(){
-    return $this->current_page + 1;
-  }
-
-  public function hasPrevious(){
+  public function hasPreviousPage(){
     $this->checkValidPageOrFail();
     return $this->current_page > 1;
   }
 
-  public function getPrevious(){
-    return $this->current_page - 1;
+  public function hasMoreThanOnePage(){
+    $this->checkValidPageOrFail();
+    return $this->num_of_pages > 1;
   }
 
-  public function getCurrentPage(){
+  public function getNextPageNumber(){
+    $this->checkValidPageOrFail();
+    return $this->current_page + 1;
+  }
+
+  public function getCurrentPageNumber(){
+    $this->checkValidPageOrFail();
     return $this->current_page;
   }
 
-  public function getLastPage(){
+  public function getPreviousPageNumber(){
+    $this->checkValidPageOrFail();
+    return $this->current_page - 1;
+  }
+
+  public function getLastPageNumber(){
+    $this->checkValidPageOrFail();
     return $this->num_of_pages;
   }
 
@@ -65,10 +76,5 @@ class PaginatorUtil
       throw new Exception("Invalid Page");
     }
     return true;
-  }
-
-
-  public function getNumberOfPages(){
-    return $this->num_of_pages;
   }
 }
