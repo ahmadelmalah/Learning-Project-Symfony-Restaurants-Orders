@@ -189,7 +189,7 @@ class OrderController extends FOSRestController
     public function deliverAction(Request $request, Forder $forder)
     {
         try{
-          $price = $request->get('price');
+          $price = (float) $request->get('price');
           $this->get('app.OrderService')->makeDelivered($forder, $price);
         }catch(Exception $e){
           $this->get('session')->getFlashBag()->add('errors', $e->getMessage());

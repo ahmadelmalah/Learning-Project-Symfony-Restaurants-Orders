@@ -56,7 +56,7 @@ class OrderService
         $this->save($forder);
     }
 
-    public function makeDelivered(Forder $forder, int $price){
+    public function makeDelivered(Forder $forder, float $price){
         $this->changeOrderState($forder, State::DELIVERED);
 
         if(is_numeric($price) == false){

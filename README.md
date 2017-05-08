@@ -97,7 +97,7 @@ What’s new in version beta 0.3 (More attention to quality and performance)
 **PHP7 New Features Used**
 * Constant arrays
 * Group use declarations
-* Object type hinting
+* Scalar type hinting
 
 **Javascript ES6 New Features Used**
 * Template literals
@@ -150,3 +150,4 @@ What’s new in version beta 0.4
 *Code Base Optimizations*
 
 * Creating ServiceDataPersistanceTrait to hold all similar functions shared between services
+* All functions inputs are type hintied including scalar types
