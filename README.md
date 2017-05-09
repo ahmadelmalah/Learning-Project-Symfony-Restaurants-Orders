@@ -150,4 +150,5 @@ What’s new in version beta 0.4
 *Code Base Optimizations*
 
 * Creating ServiceDataPersistanceTrait to hold all similar functions shared between services
-* All functions inputs are type hintied including scalar types
+* All functions arguments are using type hinting including scalar types
+* All functions are PHPDoc-style commented
