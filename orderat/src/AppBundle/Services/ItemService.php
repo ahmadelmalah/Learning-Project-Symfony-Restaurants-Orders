@@ -33,6 +33,8 @@ class ItemService
     *
     * @param Item $item
     * @param Forder $forder
+    *
+    * @throws exception if order state is not active
     */
     public function create(Item $item, Forder $forder)
     {
