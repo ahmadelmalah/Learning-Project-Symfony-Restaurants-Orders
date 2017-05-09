@@ -75,6 +75,9 @@ class OrderService
     *
     * @param Forder $forder
     * @param float $price
+    *
+    * @throws exception if price is not number
+    * @throws exception if price out of range
     */
     public function makeDelivered(Forder $forder, float $price){
         $this->changeOrderState($forder, State::DELIVERED);
@@ -108,6 +111,9 @@ class OrderService
     *
     * @param Forder $forder
     * @param int $StateID
+    *
+    * @throws exception if user is not the order creator
+    * @throws exception if there is no items
     */
     public function changeOrderState(Forder $forder, int $StateID){
       //Validation: User should be the creator of the restaurant
