@@ -14,7 +14,7 @@ services:
 
      app.OrderService:
        class: AppBundle\Services\OrderService
-       arguments: ['@doctrine.orm.entity_manager', "@=service('security.token_storage').getToken().getUser()", "@knp_paginator"]
+       arguments: ['@doctrine.orm.entity_manager', "@=service('security.token_storage').getToken().getUser()"]
 
      app.ItemService:
        class: AppBundle\Services\ItemService

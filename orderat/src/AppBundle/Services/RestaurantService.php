@@ -10,8 +10,9 @@ class RestaurantService
     protected $entityManager;
 
     use ServiceDataPersistenceTrait;
+
     /**
-    * Service constructor.
+    * Restaurant Service constructor.
     * @param EntityManager $entityManager
     */
     public function __construct(EntityManager $entityManager)
@@ -19,6 +20,11 @@ class RestaurantService
         $this->entityManager = $entityManager;
     }
 
+    /**
+    * Creates a new restaurant
+    *
+    * @param Restaurant $restaurant
+    */
     public function create(Restaurant $restaurant){
       $this->save($restaurant);
     }

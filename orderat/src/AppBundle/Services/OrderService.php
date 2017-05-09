@@ -17,19 +17,23 @@ class OrderService
     protected $knp_paginator;
 
     use ServiceDataPersistenceTrait;
-        /**
-    * Helper constructor.
+
+    /**
+    * Order Service constructor.
+    *
     * @param EntityManager $entityManager
-    * @param StateRepository $stateRepository
+    * @param $user represents the current user
     */
-     public function __construct(EntityManager $entityManager, $user, $knp_paginator_service)
+     public function __construct(EntityManager $entityManager, $user)
      {
          $this->entityManager = $entityManager;
          $this->user = $user;
      }
 
-     /*
-     * Creates an order
+     /**
+     * Creates a new order
+     *
+     * @param Forder $forder
      */
     public function create(Forder $forder)
     {
@@ -43,11 +47,21 @@ class OrderService
         $this->save($forder);
     }
 
+    /**
+    * Changes the order state to ready
+    *
+    * @param Forder $forder
+    */
     public function makeReady(Forder $forder){
         $this->changeOrderState($forder, State::READY);
         $this->save($forder);
     }
 
+    /**
+    * Changes the order state to waiting
+    *
+    * @param Forder $forder
+    */
     public function makeWaiting(Forder $forder){
         $this->changeOrderState($forder, State::WAITING);
 
@@ -56,6 +70,12 @@ class OrderService
         $this->save($forder);
     }
 
+    /**
+    * Changes the order state to delivered
+    *
+    * @param Forder $forder
+    * @param float $price
+    */
     public function makeDelivered(Forder $forder, float $price){
         $this->changeOrderState($forder, State::DELIVERED);
 
@@ -71,12 +91,24 @@ class OrderService
         $this->save($forder);
     }
 
+    /**
+    * Changes the order state to complete
+    *
+    * @param Forder $forder
+    */
     public function makeComplete(Forder $forder){
         $this->changeOrderState($forder, State::COMPLETE);
         $forder->setCompletedAt(new \DateTime("now"));
         $this->save($forder);
     }
 
+    /**
+    * Changes the order state to a specif state
+    * This is a genral function called by all other functions that change the state
+    *
+    * @param Forder $forder
+    * @param int $StateID
+    */
     public function changeOrderState(Forder $forder, int $StateID){
       //Validation: User should be the creator of the restaurant
       if($this->user->getID() != $forder->getUser()->getID()){
@@ -91,14 +123,40 @@ class OrderService
       $forder->setState($state);
     }
 
+    /**
+    * checks if Order is active
+    *
+    * @param Forder $forder
+    *
+    * @return bool
+    */
     public function isActive(Forder $forder){
         return $forder->getState()->getID() == State::ACTIVE;
     }
 
+    /**
+    * gets the count of orders with some crietria
+    *
+    * @param string $section
+    * @param int $start = 1
+    * @param array $urlFilter = null
+    *
+    * @return int
+    */
     public function getOrdersCount(string $section, int $start = 1, array $urlFilter = null){
         $filter = $this->getQueryFilterArray($section, $urlFilter, $this->user->getID())->getSQLFilter();
         return $this->entityManager->getRepository('AppBundle:Forder')->getCount($filter);
     }
+
+    /**
+    * gets the orders with some crietria
+    *
+    * @param string $section
+    * @param int $start = 1
+    * @param array $urlFilter = null
+    *
+    * @return group of orders
+    */
     public function getOrders($section, $start = 1, $urlFilter = null){
       $forders = $this->entityManager->getRepository('AppBundle:Forder')->findBy(
         $this->getQueryFilterArray($section, $urlFilter, $this->user->getID())->getArray() ,
@@ -110,6 +168,15 @@ class OrderService
       return $forders;
     }
 
+    /**
+    * gets doctrine filter from a url filter
+    *
+    * @param string $section
+    * @param array $urlFilter = null
+    * @param int $userID = null
+    *
+    * @return queryFilter Object
+    */
     static function getQueryFilterArray(string $section, array $urlFilter = null, int $userID = null){
 
         $queryFilter = new QueryFilter;
@@ -132,10 +199,22 @@ class OrderService
         return $queryFilter;
     }
 
+    /**
+    * Gets the sorting array
+    *
+    * @return array to be used by doctrine
+    */
     private function getQuerySortArray(){
         return array('id' => 'DESC');
     }
 
+    /**
+    * Returns any service constant to any external consumer
+    *
+    * @param string $constant
+    *
+    * @return the value of the corresponding constant
+    */
     public function getServiceConstant(string $constant){
       return constant($constant);
     }
