@@ -15,19 +15,24 @@ class ItemService
     protected $user;
 
     use ServiceDataPersistenceTrait;
+
     /**
-    * Helper constructor.
+    * Item Service constructor.
+    *
     * @param EntityManager $entityManager
-    * @param StateRepository $stateRepository
+    * @param $user represents the current user
     */
-     public function __construct(EntityManager $entityManager, $iUser)
+     public function __construct(EntityManager $entityManager, $user)
      {
          $this->entityManager = $entityManager;
-         $this->user = $iUser;
+         $this->user = $user;
      }
 
-    /*
-    * Inserts items inside an order
+    /**
+    * Creates a new item iside an order
+    *
+    * @param Item $item
+    * @param Forder $forder
     */
     public function create(Item $item, Forder $forder)
     {

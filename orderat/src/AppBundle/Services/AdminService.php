@@ -9,8 +9,10 @@ class AdminService
     protected $cache;
 
     /**
-    * Servvice constructor.
+    * Admin Service constructor.
+    *
     * @param EntityManager $entityManager
+    * @param $cacheService
     */
     public function __construct(EntityManager $entityManager, $cacheService)
     {
@@ -18,6 +20,13 @@ class AdminService
         $this->cache = $cacheService;
     }
 
+    /**
+    * Gets the total number of some entity
+    *
+    * @param string $entity
+    *
+    * @return integer indicates the number of items
+    */
     public function getTotal(string $entity){
         $cacheKey = "count_{$entity}";
 
@@ -32,6 +41,13 @@ class AdminService
         return $response;
     }
 
+    /**
+    * Gets the total number of some entity from its repo
+    *
+    * @param string $entity
+    *
+    * @return integer indicates the number of items
+    */
     public function getTotalFromRepo(string $entity){
       switch ($entity) {
         case 'users':
@@ -51,11 +67,20 @@ class AdminService
       return $this->entityManager->getRepository($repoName)->getTotal();
     }
 
-    public function saveDataToCache(string $key, bool $value){
+    /**
+    * Saves key-value paired data to cache
+    *
+    * @param string $key
+    * @param string $value
+    */
+    public function saveDataToCache(string $key, string $value){
       $this->cache->save($key, $value, 60*15);
       $this->checkAdminCache();
     }
 
+    /**
+    * checks if cached data are complete .. general admin cache flag is on
+    */
     public function checkAdminCache(){
       if ($this->cache->fetch('count_users') == false) return;
       if ($this->cache->fetch('count_restaurants') == false) return;
@@ -65,6 +90,11 @@ class AdminService
       $this->cache->save('cache_admin', 1, 60*15);
     }
 
+    /**
+    * checks if data are cached
+    *
+    * @return bool indicates is the admin cache flag is working
+    */
     public function isCached(){
       if($this->cache->fetch("cache_admin") == 1){
           return true;
